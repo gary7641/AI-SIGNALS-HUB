@@ -1,5 +1,5 @@
 // trade-analyzer.js
-// v0.0310309001
+// v0.0320309001
 let globalTrades = [];
 let globalInitialDeposit = 5000;
 
@@ -569,7 +569,7 @@ function renderMartinTables(symbol, tablePerSide) {
       const tr = document.createElement("tr");
       let cls = block.totalProfit < 0 ? "row-total-negative" : (block.firstPositiveLevel !== null && r.level >= block.firstPositiveLevel ? "level-safe" : "level-risk");
       if (cls) tr.classList.add(cls);
-      if (r.levelWinRate >= 80) tr.classList.add("level-high-winrate");
+      if (r.levelWinRate >= 80) { tr.classList.add("level-high-winrate"); tr.style.fontWeight = "bold"; }
       const minWinText = r.levelMinWin == null ? "–" : r.levelMinWin.toFixed(2);
       const winRateDisplay = r.levelWinRate >= 80 ? `<strong>${r.levelWinRate.toFixed(1)}%</strong>` : `${r.levelWinRate.toFixed(1)}%`;
       tr.innerHTML = `<td>${r.level}</td><td>${r.lots.toFixed(2)}</td><td>${r.levelTrades}</td><td>${r.levelSumProfit.toFixed(2)}</td><td>${r.levelSumPips.toFixed(1)}</td><td>${r.cumulativeProfit.toFixed(2)}</td><td>${winRateDisplay}</td><td>${minWinText}</td><td>${r.totalProfit.toFixed(2)}</td><td>${r.totalTrades}</td>`;
