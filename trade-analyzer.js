@@ -1,5 +1,5 @@
 // trade-analyzer.js
-// v0.0270309001
+// v0.0280309002
 let globalTrades = [];
 let globalBySymbol = {};
 let globalEAKey = "SMA";
@@ -66,7 +66,7 @@ function updateChartThemes(theme) {
 
 // Analyze button
 const analyzeBtn = document.getElementById("analyzeBtn");
-if (analyzeBtn) analyzeBtn.addEventListener("click", handleAnalyze);
+if (analyzeBtn) analyzeBtn.addEventListener("click", handleAnalyze); const csvFile = document.getElementById("csvFile"); if (csvFile) csvFile.addEventListener("change", handleAnalyze);("click", handleAnalyze);
 
 // Reset button
 const resetBtn = document.getElementById("resetBtn");
@@ -96,11 +96,6 @@ function handleAnalyze() {
   const eaSelect = document.getElementById("eaSelect");
   globalEAKey = eaSelect ? eaSelect.value : "SMA";
   
-  const initDepInput = document.getElementById("initialDepositInput");
-  if (initDepInput && initDepInput.value) {
-    globalInitialDeposit = parseFloat(initDepInput.value) || 5000;
-  }
-
   const reader = new FileReader();
   reader.onload = (e) => {
     parseCsv(e.target.result);
@@ -111,8 +106,7 @@ function handleAnalyze() {
 
 // ---------- CSV 解析 ----------
 function parseCsv(text) {
-  const lines = text.trim().split(/\r?
-/);
+  const lines = text.trim().split(/\r?\n/);
   if (!lines.length) {
     globalTrades = [];
     globalBySymbol = {};
