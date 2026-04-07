@@ -575,7 +575,10 @@ function renderMartinTables(symbol, tablePerSide) {
       if (cls) tr.classList.add(cls);
       if (r.levelWinRate >= 80) tr.classList.add("level-high-winrate");
       const minWinText = r.levelMinWin == null ? "–" : r.levelMinWin.toFixed(2);
-      tr.innerHTML = `<td>${r.level}</td><td>${r.lots.toFixed(2)}</td><td>${r.levelTrades}</td><td>${r.levelSumProfit.toFixed(2)}</td><td>${r.levelSumPips.toFixed(1)}</td><td>${r.cumulativeProfit.toFixed(2)}</td><td>${r.levelWinRate.toFixed(1)}%</td><td>${minWinText}</td><td>${r.totalProfit.toFixed(2)}</td><td>${r.totalTrades}</td>`;
+            const winRateDisplay = r.levelwinRate >= 80
+        ? `<b>${r.levelWinRate.toFixed(1)}%</b>`
+        : `${r.levelWinRate.toFixed(1)}%`;
+      tr.innerHTML = `<td>${r.level}</td><td>${r.lots.toFixed(2)}</td><td>${r.levelTrades}</td><td>${r.levelSumProfit.toFixed(2)}</td><td>${r.levelSumPips.toFixed(1)}</td><td>${r.cumulativeProfit.toFixed(2)}</td><td>${winRateDisplay}</td><td>${minWinText}</td><td>${r.totalProfit.toFixed(2)}</td><td>${r.totalTrades}</td>`;
       tbody.appendChild(tr);
     });
     wrap.appendChild(table);
