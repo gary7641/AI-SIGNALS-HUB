@@ -1,7 +1,6 @@
 // trade-analyzer.js
-// v0.0280309002
+// v0.0290309001
 let globalTrades = [];
-let globalBySymbol = {};
 let globalEAKey = "SMA";
 let globalInitialDeposit = 5000;
 
@@ -573,11 +572,15 @@ function renderMartinTables(symbol, tablePerSide) {
       if (cls) tr.classList.add(cls);
       if (r.levelWinRate >= 80) tr.classList.add("level-high-winrate");
       const minWinText = r.levelMinWin == null ? "–" : r.levelMinWin.toFixed(2);
-      const winRateDisplay = r.levelWinRate >= 80 ? `**${r.levelWinRate.toFixed(1)}%**` : `${r.levelWinRate.toFixed(1)}%`;
+      const winRateDisplay = r.levelWinRate >= 80 ? `<strong>${r.levelWinRate.toFixed(1)}%</strong>` : `${r.levelWinRate.toFixed(1)}%`;
       tr.innerHTML = `<td>${r.level}</td><td>${r.lots.toFixed(2)}</td><td>${r.levelTrades}</td><td>${r.levelSumProfit.toFixed(2)}</td><td>${r.levelSumPips.toFixed(1)}</td><td>${r.cumulativeProfit.toFixed(2)}</td><td>${winRateDisplay}</td><td>${minWinText}</td><td>${r.totalProfit.toFixed(2)}</td><td>${r.totalTrades}</td>`;
       tbody.appendChild(tr);
     });
     wrap.appendChild(table);
+        const legend = document.createElement("div");
+            legend.className = "martin-legend";
+                legend.innerHTML = `<span class="legend-box level-safe"></span> Safe Level (Cumulative profit recovered) &nbsp; <span class="legend-box level-high-winrate"></span> Win Rate \u226580% (highlighted in blue) &nbsp; <span class="legend-box row-total-negative"></span> Loss-making side`;
+                    wrap.appendChild(legend);
     container.appendChild(wrap);
   });
 }
