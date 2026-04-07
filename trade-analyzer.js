@@ -1,7 +1,6 @@
 // trade-analyzer.js
-// v0.0300309001
+// v0.0310309001
 let globalTrades = [];
-let globalEAKey = "SMA";
 let globalInitialDeposit = 5000;
 
 let equityChart, weekdayChart, symbolProfitChart;
@@ -65,7 +64,7 @@ function updateChartThemes(theme) {
 
 // Analyze button
 const analyzeBtn = document.getElementById("analyzeBtn");
-if (analyzeBtn) analyzeBtn.addEventListener("click", handleAnalyze); const csvFile = document.getElementById("csvFile"); if (csvFile) csvFile.addEventListener("change", handleAnalyze);(
+if (analyzeBtn) analyzeBtn.addEventListener("click", handleAnalyze); const csvFile = document.getElementById("csvFile"); if (csvFile) csvFile.addEventListener("change", handleAnalyze);
 
 // Reset button
 const resetBtn = document.getElementById("resetBtn");
@@ -729,14 +728,14 @@ function scrollToAnalyzerSection(id) {
 // ---------- SWOT ----------
 function renderSwot(swot) {
   if (!swot) return;
-  document.getElementById("swotST").innerHTML = "**ST** <br>" + swot.ST.join("<br>");
-  document.getElementById("swotS").innerHTML = "**S** <br>" + swot.S.join("<br>");
-  document.getElementById("swotSW").innerHTML = "**SW** <br>" + swot.SW.join("<br>");
-  document.getElementById("swotT").innerHTML = "**T** <br>" + swot.T.join("<br>");
-  document.getElementById("swotW").innerHTML = "**W** <br>" + swot.W.join("<br>");
-  document.getElementById("swotOT").innerHTML = "**OT** <br>" + swot.OT.join("<br>");
-  document.getElementById("swotO").innerHTML = "**O** <br>" + swot.O.join("<br>");
-  document.getElementById("swotOW").innerHTML = "**OW** <br>" + swot.OW.join("<br>");
+  document.getElementById("swotST").innerHTML = "<strong>ST</strong><br>" + swot.ST.join("<br>");
+    document.getElementById("swotS").innerHTML = "<strong>S</strong><br>" + swot.S.join("<br>");
+    document.getElementById("swotSW").innerHTML = "<strong>SW</strong><br>" + swot.SW.join("<br>");
+    document.getElementById("swotT").innerHTML = "<strong>T</strong><br>" + swot.T.join("<br>");
+    document.getElementById("swotW").innerHTML = "<strong>W</strong><br>" + swot.W.join("<br>");
+    document.getElementById("swotOT").innerHTML = "<strong>OT</strong><br>" + swot.OT.join("<br>");
+    document.getElementById("swotO").innerHTML = "<strong>O</strong><br>" + swot.O.join("<br>");
+    document.getElementById("swotOW").innerHTML = "<strong>OW</strong><br>" + swot.OW.join("<br>");
   const eaCenterText = document.getElementById("swotCenterText");
   if (eaCenterText) {
     eaCenterText.innerHTML = swot.centerAnalysis ? swot.centerAnalysis.join("<br>") : "";
