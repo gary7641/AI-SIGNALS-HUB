@@ -1,5 +1,5 @@
 // trade-analyzer.js
-// v0.0260308004
+// v0.0270309001
 let globalTrades = [];
 let globalBySymbol = {};
 let globalEAKey = "SMA";
@@ -33,7 +33,7 @@ function updateChartThemes(theme) {
   const textColor = isDark ? "#e8eaf6" : "#1a1f3a";
 
   Chart.defaults.color = textColor;
-  Chart.defaults.scale.grid.color = gridColor;
+  // Chart.defaults global grid removed (v4 compat)
 
   // Update existing charts if they exist
   [equityChart, weekdayChart, symbolProfitChart, mfeChart, maeChart, holdingChart,
