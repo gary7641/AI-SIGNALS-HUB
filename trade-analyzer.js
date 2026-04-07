@@ -1,5 +1,5 @@
 // trade-analyzer.js
-// v0.0290309001
+// v0.0300309001
 let globalTrades = [];
 let globalEAKey = "SMA";
 let globalInitialDeposit = 5000;
@@ -65,7 +65,7 @@ function updateChartThemes(theme) {
 
 // Analyze button
 const analyzeBtn = document.getElementById("analyzeBtn");
-if (analyzeBtn) analyzeBtn.addEventListener("click", handleAnalyze); const csvFile = document.getElementById("csvFile"); if (csvFile) csvFile.addEventListener("change", handleAnalyze);("click", handleAnalyze);
+if (analyzeBtn) analyzeBtn.addEventListener("click", handleAnalyze); const csvFile = document.getElementById("csvFile"); if (csvFile) csvFile.addEventListener("change", handleAnalyze);(
 
 // Reset button
 const resetBtn = document.getElementById("resetBtn");
