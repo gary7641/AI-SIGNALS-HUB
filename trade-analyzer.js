@@ -371,29 +371,23 @@ function expandBody(id) {
 // ---------- 總流程 / RESET ----------
 function buildAll() {
   if (!globalTrades.length) {
-    alert("CSV 內沒有有效交易紀錄");
-    return;
-  }
-
+    alert("CSV 內沒function buildAll() {
+  if (!globalTrades.length) { alert("CSV 內沒有有效交易紀錄"); return; }
   const acc = buildAccountSummary();
-
   renderSummaryCards(acc);
+  renderRadarChart(acc);
+  renderSummaryEquityChart(acc);
+    
   document.getElementById("summaryCardsSection").style.display = "block";
   expandBody("summaryCardsBody");
-
-  renderSummaryCards(acc);
-  document.getElementById("summaryCardsSection").style.display = "block";
-  expandBody("summaryCardsBody");
-
-  renderAccountStatistics(acc.stats);  // ★ NEW
-  renderMinimumArea(acc.stats);
-
   renderSymbolButtons();
+    
   document.getElementById("symbolSection").style.display = "block";
   renderSymbolMiniCharts();
   expandBody("symbolBody");
-
   renderSymbol("ALL");
+  const menuBar = document.getElementById("analyzerMenuBar");
+  if (menuBar) menuBar.style.display = "flex";
 }
 
 function resetView() {
@@ -581,6 +575,31 @@ function renderSummaryCards(acc) {
     radarAlgoScore.textContent = "–";
 }
 
+function renderSummaryEquityChart(acc) {
+  const ctxEl = document.getElementById("equityChart");
+  if (!ctxEl) return;
+  if (equityChart) equityChart.destroy();
+  equityChart = new Chart(ctxEl.getContext("2d"), {
+    type: "line",
+    data: {
+      labels: acc.curve.map(p => p.x),
+      datasets: [{
+        label: "Equity Curve",
+        data: acc.curve.map(p => p.y),
+        borderColor: "#22d3ee",
+        backgroundColor: "rgba(34,211,238,0.1)",
+        fill: true, pointRadius: 0, tension: 0.3, borderWidth: 2
+      }]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { display: false },
+        y: { title: { display: true, text: "Cumulative Profit" }, ticks: { maxTicksLimit: 5 } }
+      }
+    }
+  });
+}
 
 function renderRadarChart(accountStats) {
   const ctxEl = document.getElementById("radarChart");
@@ -658,6 +677,40 @@ function renderRadarChart(accountStats) {
       }
     }
   });
+
+// ---------- Section 2: Equity Growth Chart ----------
+function renderSummaryEquityChart(acc) {
+  const ctxEl = document.getElementById("equityChart");
+  if (!ctxEl) return;
+  if (equityChart) equityChart.destroy();
+  equityChart = new Chart(ctxEl.getContext("2d"), {
+    type: "line",
+    data: {
+      labels: acc.curve.map(p => p.x),
+      datasets: [{
+        label: "Equity Curve",
+        data: acc.curve.map(p => p.y),
+        borderColor: "#22d3ee",
+        backgroundColor: "rgba(34,211,238,0.1)",
+        fill: true,
+        pointRadius: 0,
+        tension: 0.3,
+        borderWidth: 2
+      }]
+    },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { display: false },
+        y: {
+          title: { display: true, text: "Cumulative Profit" },
+          ticks: { maxTicksLimit: 5 }
+        }
+      }
+    }
+  });
+}
+  
 }
 
 
