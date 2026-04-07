@@ -601,29 +601,21 @@ function renderSummaryEquityChart(acc) {
   });
 }
 
-function renderRadarChart(accountStats) {
+function renderRadarChart(acc) {
   const ctxEl = document.getElementById("radarChart");
   if (!ctxEl) return;
-
   if (radarChart) radarChart.destroy();
-
-  const risk = accountStats.risk;
-  const radar = accountStats.radar;
-
-  const profitScore = risk.winRatePct;              // 多多益善
-  const lossScore = 100 - risk.lossRatePct;         // 越少越好
-  const depositLoadPct =
-    typeof risk.maxDepositLoadPct === "number"
-      ? risk.maxDepositLoadPct
-      : 0;
-  const depositScore = 100 - Math.min(100, depositLoadPct); // 倉位壓力低→好
-
-  const ddScore = 100 - Math.min(100, risk.maxDrawdownPct); // DD 低→好
-
-  const activityScore = accountStats.growth.tradesPerDay * 20;
-  const clippedActivity = Math.max(0, Math.min(100, activityScore));
-
-  const algoScore = radar.algoQuality;
+  const stats = acc.stats;
+  const profitScore = stats.winRate * 100;
+  const lossScore = 100 - stats.lossRate * 100;
+  const depositScore = 100;
+  const ddScore = Math.max(0, 100 - Math.min(100, stats.maxDrawdown / 100));
+  const periodDays = acc.firstTime && acc.lastTime
+    ? Math.max(1, Math.round((acc.lastTime - acc.firstTime) / (1000 * 3600 * 24)))
+    : 1;
+  const tradesPerDay = stats.totalTrades / periodDays;
+  const clippedActivity = Math.max(0, Math.min(100, tradesPerDay * 20));
+  const algoScore = 50;
 
   const labels = [
     "Profit Trades",
