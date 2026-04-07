@@ -135,7 +135,44 @@
         .swot-box{padding:12px;border-radius:8px;border:1px solid var(--border);min-height:100px;font-size:12px}
         .swot-center{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:var(--bg2);font-weight:700}
         
-        .analyzer-nav{display:none;position:sticky;top:64px;background:var(--bg2);padding:10px;gap:8px;z-index:4;border-bottom:1px solid var(--border);margin-bottom:16px}
+        .analyzer-nav{display:none;position:sticky;top:64px;background:var(--bg2);padding:10px;gap:8px;z-index:4;border:1px solid var(--border);margin-bottom:16px;border-radius:12px}
+        .analyzer-nav button{border:none;background:transparent;color:var(--txt1);font-weight:600}
+        .analyzer-nav button:hover{color:var(--cyan)}
+        
+        /* Switch UI */
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 34px;
+          height: 20px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background-color: #ccc;
+          transition: .4s;
+          border-radius: 20px;
+        }
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 14px; width: 14px;
+          left: 3px; bottom: 3px;
+          background-color: white;
+          transition: .4s;
+          border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--cyan); }
+        input:checked + .slider:before { transform: translateX(14px); }
+        
+        .chart-grid-fixed{display:grid; grid-template-columns:1fr 1fr; gap:16px; width:100%}
+        .chart-box-fixed{background:var(--bg2); padding:16px; border-radius:12px; border:1px solid var(--border); min-height:350px}
+        .chart-box-fixed h5{margin-bottom:12px}
+        .chart-box-fixed canvas{width:100%!important; height:280px!important}
+        
+        .footer{text-align:center; padding:20px; color:var(--txt2); font-size:12px}
     </style>
 </head>
 <body>
@@ -187,11 +224,11 @@
             </div>
 
             <div id="analyzerMenuBar" class="analyzer-nav">
-                <button class="secondary-btn" onclick="scrollToAnalyzerSection('summaryCardsSection')">Summary</button>
-                <button class="secondary-btn" onclick="scrollToAnalyzerSection('symbolSection')">Symbols</button>
-                <button class="secondary-btn" onclick="scrollToAnalyzerSection('symbolDetailSection')">Deep Analysis</button>
-                <button class="secondary-btn" onclick="scrollToAnalyzerSection('martinSection')">Martingale</button>
-                <button class="secondary-btn" onclick="scrollToAnalyzerSection('swotSection')">SWOT</button>
+                <button onclick="scrollToAnalyzerSection('summaryCardsSection')">Summary</button>
+                <button onclick="scrollToAnalyzerSection('symbolSection')">Symbols</button>
+                <button onclick="scrollToAnalyzerSection('symbolDetailSection')">Deep Analysis</button>
+                <button onclick="scrollToAnalyzerSection('martinSection')">Martingale</button>
+                <button onclick="scrollToAnalyzerSection('swotSection')">SWOT</button>
             </div>
 
             <div id="summaryCardsSection" style="display:none">
@@ -206,11 +243,8 @@
                             <div class="radar-chart-wrapper"><canvas id="radarChart"></canvas></div>
                             <div id="radarStats" style="font-size:12px; margin-top:10px">
                                 <div>Win Rate: <span id="radarProfitTrades">-</span></div>
-                                <div>Loss Rate: <span id="radarLossTrades">-</span></div>
                                 <div>Max DD: <span id="radarMaxDD">-</span></div>
                                 <div>Total Trades: <span id="radarActivity">-</span></div>
-                                <div>Algo Score: <span id="radarAlgoScore">-</span></div>
-                                <div>Deposit Load: <span id="radarDepositLoad">-</span></div>
                             </div>
                         </div>
                         <div class="panel">
@@ -247,49 +281,53 @@
                     <span class="collapse-toggle">－</span>
                 </div>
                 <div id="symbolDetailBody" class="collapsible-body">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px">
-                        <div id="eaTag" style="display:inline-block;padding:4px 8px;background:var(--purple);color:#fff;border-radius:4px;font-size:12px">EA</div>
-                        <div id="cumSwitchWrapper" style="display:none; align-items:center; gap:8px; font-size:12px">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
+                        <div id="eaTag" style="display:inline-block;padding:6px 12px;background:var(--purple);color:#fff;border-radius:6px;font-size:12px">EA</div>
+                        <div id="cumSwitchWrapper" style="display:none; align-items:center; gap:10px; font-size:13px">
                             <span>Separated Cumulative</span>
-                            <input type="checkbox" id="cumSwitch">
+                            <label class="switch"><input type="checkbox" id="cumSwitch"><span class="slider"></span></label>
                         </div>
                     </div>
+                    
                     <div id="symbolStats" class="panel" style="font-family:monospace; line-height:1.6"></div>
                     
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px; margin-bottom:16px">
-                        <div class="panel">
+                    <div class="chart-grid-fixed">
+                        <div class="chart-box-fixed" style="grid-column: span 2">
                             <h5>Cumulative Profit</h5>
-                            <div style="height:300px"><canvas id="symbolCumulativeChart"></canvas></div>
+                            <canvas id="symbolCumulativeChart"></canvas>
                         </div>
-                        <div class="panel">
-                            <h5>Weekday Analysis</h5>
-                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px">
-                                <canvas id="symbolWeekdayProfitChart"></canvas>
-                                <canvas id="symbolWeekdayCountChart"></canvas>
-                            </div>
+                        <div class="chart-box-fixed">
+                            <h5>Weekday Profit</h5>
+                            <canvas id="symbolWeekdayProfitChart"></canvas>
                         </div>
-                        <div class="panel">
-                            <h5>Hourly Analysis</h5>
-                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px">
-                                <canvas id="symbolHourlyProfitChart"></canvas>
-                                <canvas id="symbolHourlyCountChart"></canvas>
-                            </div>
+                        <div class="chart-box-fixed">
+                            <h5>Weekday Single Count</h5>
+                            <canvas id="symbolWeekdayCountChart"></canvas>
                         </div>
-                        <div class="panel">
-                            <h5>MFE / MAE Analysis</h5>
-                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px">
-                                <canvas id="mfeChart"></canvas>
-                                <canvas id="maeChart"></canvas>
-                            </div>
+                        <div class="chart-box-fixed">
+                            <h5>Hourly Profit</h5>
+                            <canvas id="symbolHourlyProfitChart"></canvas>
+                        </div>
+                        <div class="chart-box-fixed">
+                            <h5>Hourly Single Count</h5>
+                            <canvas id="symbolHourlyCountChart"></canvas>
+                        </div>
+                        <div class="chart-box-fixed">
+                            <h5>MFE vs Result</h5>
+                            <canvas id="mfeChart"></canvas>
                             <div style="display:flex; gap:8px; margin-top:8px">
                                 <button class="toggle-mode active" data-mode="pips">Pips</button>
                                 <button class="toggle-mode" data-mode="money">Money</button>
                             </div>
                         </div>
-                    </div>
-                    <div class="panel">
-                        <h5>Holding Time Analysis</h5>
-                        <div style="height:300px"><canvas id="holdingChart"></canvas></div>
+                        <div class="chart-box-fixed">
+                            <h5>MAE vs Result</h5>
+                            <canvas id="maeChart"></canvas>
+                        </div>
+                        <div class="chart-box-fixed" style="grid-column: span 2">
+                            <h5>Holding Time Analysis</h5>
+                            <canvas id="holdingChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -323,6 +361,8 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="footer">Powered by ShenXu</div>
         </div>
     </div>
 
