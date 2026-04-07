@@ -370,18 +370,14 @@ function expandBody(id) {
 
 // ---------- 總流程 / RESET ----------
 function buildAll() {
-  if (!globalTrades.length) {
-    alert("CSV 內沒function buildAll() {
   if (!globalTrades.length) { alert("CSV 內沒有有效交易紀錄"); return; }
   const acc = buildAccountSummary();
   renderSummaryCards(acc);
   renderRadarChart(acc);
   renderSummaryEquityChart(acc);
-    
   document.getElementById("summaryCardsSection").style.display = "block";
   expandBody("summaryCardsBody");
   renderSymbolButtons();
-    
   document.getElementById("symbolSection").style.display = "block";
   renderSymbolMiniCharts();
   expandBody("symbolBody");
@@ -575,32 +571,6 @@ function renderSummaryCards(acc) {
     radarAlgoScore.textContent = "–";
 }
 
-function renderSummaryEquityChart(acc) {
-  const ctxEl = document.getElementById("equityChart");
-  if (!ctxEl) return;
-  if (equityChart) equityChart.destroy();
-  equityChart = new Chart(ctxEl.getContext("2d"), {
-    type: "line",
-    data: {
-      labels: acc.curve.map(p => p.x),
-      datasets: [{
-        label: "Equity Curve",
-        data: acc.curve.map(p => p.y),
-        borderColor: "#22d3ee",
-        backgroundColor: "rgba(34,211,238,0.1)",
-        fill: true, pointRadius: 0, tension: 0.3, borderWidth: 2
-      }]
-    },
-    options: {
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { display: false },
-        y: { title: { display: true, text: "Cumulative Profit" }, ticks: { maxTicksLimit: 5 } }
-      }
-    }
-  });
-}
-
 function renderRadarChart(acc) {
   const ctxEl = document.getElementById("radarChart");
   if (!ctxEl) return;
@@ -616,52 +586,34 @@ function renderRadarChart(acc) {
   const tradesPerDay = stats.totalTrades / periodDays;
   const clippedActivity = Math.max(0, Math.min(100, tradesPerDay * 20));
   const algoScore = 50;
-
   const labels = [
-    "Profit Trades",
-    "Loss Trades",
-    "Max Deposit Load",
-    "Max DD",
-    "Trading Activity",
-    "Algo Trading"
+    "Profit Trades", "Loss Trades", "Max Deposit Load",
+    "Max DD", "Trading Activity", "Algo Trading"
   ];
-
   const data = [
-    profitScore,
-    lossScore,
-    depositScore,
-    ddScore,
-    clippedActivity,
-    algoScore
+    profitScore, lossScore, depositScore,
+    ddScore, clippedActivity, algoScore
   ];
-
   radarChart = new Chart(ctxEl.getContext("2d"), {
     type: "radar",
     data: {
       labels,
-      datasets: [
-        {
-          label: "EA Radar",
-          data,
-          backgroundColor: "rgba(14, 165, 233, 0.25)",
-          borderColor: "#0ea5e9",
-          borderWidth: 2,
-          pointBackgroundColor: "#0ea5e9",
-          pointRadius: 3
-        }
-      ]
+      datasets: [{
+        label: "EA Radar",
+        data,
+        backgroundColor: "rgba(14, 165, 233, 0.25)",
+        borderColor: "#0ea5e9",
+        borderWidth: 2,
+        pointBackgroundColor: "#0ea5e9",
+        pointRadius: 3
+      }]
     },
     options: {
       plugins: { legend: { display: false } },
       scales: {
         r: {
-          beginAtZero: true,
-          min: 0,
-          max: 100,
-          ticks: {
-            stepSize: 20,
-            showLabelBackdrop: false
-          },
+          beginAtZero: true, min: 0, max: 100,
+          ticks: { stepSize: 20, showLabelBackdrop: false },
           grid: { color: "rgba(148, 163, 184, 0.4)" },
           angleLines: { color: "rgba(148, 163, 184, 0.4)" },
           pointLabels: { font: { size: 10 } }
@@ -669,7 +621,7 @@ function renderRadarChart(acc) {
       }
     }
   });
-
+}
 // ---------- Section 2: Equity Growth Chart ----------
 function renderSummaryEquityChart(acc) {
   const ctxEl = document.getElementById("equityChart");
@@ -701,8 +653,6 @@ function renderSummaryEquityChart(acc) {
       }
     }
   });
-}
-  
 }
 
 
