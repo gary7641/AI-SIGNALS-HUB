@@ -73,6 +73,7 @@
             padding:0 24px;z-index:5;transition:left .2s;
         }
         .sidebar:hover + .header{left:240px}
+        .powered-by{font-size:11px; color:var(--txt2); font-weight:600; letter-spacing:0.5px}
         
         .main{
             margin-left:60px;margin-top:64px;padding:28px;
@@ -135,9 +136,18 @@
         .swot-box{padding:12px;border-radius:8px;border:1px solid var(--border);min-height:100px;font-size:12px}
         .swot-center{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:var(--bg2);font-weight:700}
         
-        .analyzer-nav{display:none;position:sticky;top:64px;background:var(--bg2);padding:10px;gap:8px;z-index:4;border:1px solid var(--border);margin-bottom:16px;border-radius:12px}
-        .analyzer-nav button{border:none;background:transparent;color:var(--txt1);font-weight:600}
-        .analyzer-nav button:hover{color:var(--cyan)}
+        .analyzer-nav{
+            display:none;position:sticky;top:64px;background:var(--bg2);padding:8px;gap:6px;z-index:4;
+            border:1px solid var(--border);margin-bottom:20px;border-radius:12px;
+            overflow-x:auto;box-shadow:0 2px 8px rgba(0,0,0,0.05);
+        }
+        .analyzer-nav button{
+            border:none;background:var(--bg1);color:var(--txt1);padding:8px 14px;
+            border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;
+            white-space:nowrap;display:flex;align-items:center;gap:6px;
+            border:1px solid transparent;transition:0.2s;
+        }
+        .analyzer-nav button:hover{background:var(--bg2);border-color:var(--cyan);color:var(--cyan)}
         
         /* Switch UI */
         .switch {
@@ -171,8 +181,6 @@
         .chart-box-fixed{background:var(--bg2); padding:16px; border-radius:12px; border:1px solid var(--border); min-height:350px}
         .chart-box-fixed h5{margin-bottom:12px}
         .chart-box-fixed canvas{width:100%!important; height:280px!important}
-        
-        .footer{text-align:center; padding:20px; color:var(--txt2); font-size:12px}
     </style>
 </head>
 <body>
@@ -185,7 +193,8 @@
 
     <div class="header">
         <div class="header-left">📡 <span id="pageTitleDisplay">Home</span></div>
-        <div class="header-right" style="display:flex;gap:16px;align-items:center">
+        <div class="header-right" style="display:flex;gap:20px;align-items:center">
+            <span class="powered-by">Powered by ShenXu</span>
             <select onchange="setTheme(this.value)" id="themeSelect">
                 <option value="light">☀️ Light</option>
                 <option value="dark">🌙 Dark</option>
@@ -224,16 +233,17 @@
             </div>
 
             <div id="analyzerMenuBar" class="analyzer-nav">
-                <button onclick="scrollToAnalyzerSection('summaryCardsSection')">Summary</button>
-                <button onclick="scrollToAnalyzerSection('symbolSection')">Symbols</button>
-                <button onclick="scrollToAnalyzerSection('symbolDetailSection')">Deep Analysis</button>
-                <button onclick="scrollToAnalyzerSection('martinSection')">Martingale</button>
-                <button onclick="scrollToAnalyzerSection('swotSection')">SWOT</button>
+                <button onclick="scrollToAnalyzerSection('summaryCardsSection')">📊 Summary</button>
+                <button onclick="scrollToAnalyzerSection('symbolSection')">🔣 Symbols</button>
+                <button onclick="scrollToAnalyzerSection('symbolDetailSection')">🔍 Deep Analysis</button>
+                <button onclick="scrollToAnalyzerSection('mfeMaeNavPoint')">🎯 MFE/MAE</button>
+                <button onclick="scrollToAnalyzerSection('martinSection')">📉 Martingale</button>
+                <button onclick="scrollToAnalyzerSection('swotSection')">🛡️ SWOT</button>
             </div>
 
             <div id="summaryCardsSection" style="display:none">
                 <div class="collapsible-header" data-target="summaryCardsBody">
-                    <h3>1. 帳戶總覽 Summary</h3>
+                    <h3>帳戶總覽 Summary</h3>
                     <span class="collapse-toggle">－</span>
                 </div>
                 <div id="summaryCardsBody" class="collapsible-body">
@@ -266,7 +276,7 @@
 
             <div id="symbolSection" style="display:none;margin-top:16px">
                 <div class="collapsible-header" data-target="symbolBody">
-                    <h3>4. Symbol 一覽</h3>
+                    <h3>Symbol 一覽</h3>
                     <span class="collapse-toggle">－</span>
                 </div>
                 <div id="symbolBody" class="collapsible-body">
@@ -277,12 +287,12 @@
 
             <div id="symbolDetailSection" style="display:none;margin-top:16px">
                 <div class="collapsible-header" data-target="symbolDetailBody">
-                    <h3 id="symbolTitle">5. Symbol 深入分析</h3>
+                    <h3 id="symbolTitle">Symbol 深入分析</h3>
                     <span class="collapse-toggle">－</span>
                 </div>
                 <div id="symbolDetailBody" class="collapsible-body">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
-                        <div id="eaTag" style="display:inline-block;padding:6px 12px;background:var(--purple);color:#fff;border-radius:6px;font-size:12px">EA</div>
+                        <div id="eaTag" style="display:inline-block;padding:6px 12px;background:var(--purple);color:#fff;border-radius:4px;font-size:12px">EA</div>
                         <div id="cumSwitchWrapper" style="display:none; align-items:center; gap:10px; font-size:13px">
                             <span>Separated Cumulative</span>
                             <label class="switch"><input type="checkbox" id="cumSwitch"><span class="slider"></span></label>
@@ -312,7 +322,7 @@
                             <h5>Hourly Single Count</h5>
                             <canvas id="symbolHourlyCountChart"></canvas>
                         </div>
-                        <div class="chart-box-fixed">
+                        <div id="mfeMaeNavPoint" class="chart-box-fixed">
                             <h5>MFE vs Result</h5>
                             <canvas id="mfeChart"></canvas>
                             <div style="display:flex; gap:8px; margin-top:8px">
@@ -361,8 +371,6 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="footer">Powered by ShenXu</div>
         </div>
     </div>
 
