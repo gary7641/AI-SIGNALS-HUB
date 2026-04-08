@@ -1,7 +1,9 @@
 // trade-analyzer.js
-// v0.0320309001
+// v0.0320309002
 let globalTrades = [];
 let globalInitialDeposit = 5000;
+let globalEAKey = "SMA"; // FIX: Declare at top level
+let globalBySymbol = {}; // FIX: Declare at top level
 let equityChart, weekdayChart, symbolProfitChart;
 let mfeChart, maeChart, holdingChart;
 let symbolCumulativeChart, symbolWeekdayProfitChart, symbolWeekdayCountChart, symbolHourlyProfitChart, symbolHourlyCountChart;
@@ -96,8 +98,7 @@ function handleAnalyze() {
 }
 
 function parseCsv(text) {
-    const lines = text.trim().split(/\r?
-/);
+    const lines = text.trim().split(/\r?\n/);
     if (!lines.length) {
         globalTrades = [];
         globalBySymbol = {};
@@ -226,9 +227,9 @@ function buildAll() {
     renderSummaryEquityChart(acc);
     document.getElementById("summaryCardsSection").style.display = "block";
     expandBody("summaryCardsBody");
-    renderSymbolButtons();
+    renderSymbolButtons(acc); // FIX: Pass acc as parameter
     document.getElementById("symbolSection").style.display = "block";
-    renderSymbolMiniCharts();
+    // renderSymbolMiniCharts(); // FIX: Function doesn't exist, comment out for now
     expandBody("symbolBody");
     renderSymbol("ALL");
     if (document.getElementById("analyzerMenuBar")) document.getElementById("analyzerMenuBar").style.display = "flex";
@@ -288,13 +289,14 @@ function renderRadarChart(acc) {
     });
 }
 
-function renderSymbolButtons() {
+function renderSymbolButtons(acc) { // FIX: Accept acc as parameter
     const container = document.getElementById("symbolButtons");
     container.innerHTML = "";
     const allBtn = document.createElement("button");
     allBtn.className = "symbol-btn active";
     allBtn.dataset.symbol = "ALL";
-    allBtn.innerHTML = `All Symbols &nbsp; ${(acc.stats.grossProfit - acc.stats.grossLoss).toFixed(0)}`;
+    const totalProfit = acc.stats.grossProfit - acc.stats.grossLoss; // FIX: Use acc param, not bare acc
+    allBtn.innerHTML = `All Symbols &nbsp; ${totalProfit.toFixed(0)}`;
     allBtn.onclick = () => { [...container.querySelectorAll(".symbol-btn")].forEach(b => b.classList.remove("active")); allBtn.classList.add("active"); renderSymbol("ALL"); };
     container.appendChild(allBtn);
     Object.keys(globalBySymbol).sort().forEach(sym => {
@@ -316,7 +318,7 @@ function renderSymbol(symbol) {
     document.getElementById("symbolTitle").textContent = symbol === "ALL" ? "Symbol 深入分析 – All Symbols" : `Symbol 深入分析 – ${symbol}`;
     document.getElementById("cumSwitchWrapper").style.display = symbol === "ALL" ? "flex" : "none";
     const stats = buildStats(trades);
-    document.getElementById("symbolStats").innerHTML = `單數: ${stats.totalTrades} &nbsp; 勝率: ${(stats.winRate * 100).toFixed(1)}% &nbsp; 淨盈利: ${(stats.grossProfit - stats.grossLoss).toFixed(2)} &nbsp; PF: ${stats.profitFactor.toFixed(2)}<br>期望值/單: ${stats.expectancy.toFixed(2)} &nbsp; Max DD: ${stats.maxDrawdown.toFixed(2)} &nbsp; 最大連虧: ${stats.maxConsecLoss}`;
+    document.getElementById("symbolStats").innerHTML = `單數: ${stats.totalTrades} &nbsp; 勝率: ${(stats.winRate * 100).toFixed(1)}% &nbsp; 淨盈利: ${(stats.grossProfit - stats.grossLoss).toFixed(2)} &nbsp; PF: ${stats.profitFactor.toFixed(2)}<br>期望値/單: ${stats.expectancy.toFixed(2)} &nbsp; Max DD: ${stats.maxDrawdown.toFixed(2)} &nbsp; 最大連詧: ${stats.maxConsecLoss}`;
     const rule = EA_RULES[globalEAKey] || EA_RULES.OtherBasic;
     document.getElementById("eaTag").textContent = symbol === "ALL" ? `${rule.name} – 全組合` : rule.name;
     let martinSummary = null;
@@ -360,10 +362,8 @@ function renderSymbolExtraCharts(symbol, trades) {
         let c = 0;
         symbolCumulativeChart = new Chart(ctxCum, { type: "line", data: { labels: trades.map((_, i) => i + 1), datasets: [{ label: "Cumulative Profit", data: trades.map(t => { c += t.netProfit; return c; }), borderColor: "#2563eb", fill: false, pointRadius: 0, tension: 0.15, borderWidth: 1 }] }, options: { plugins: { legend: { display: false } } } });
     }
-    
     const wdProfit = Array(7).fill(0), wdCount = Array(7).fill(0), hrProfit = Array(24).fill(0), hrCount = Array(24).fill(0);
     trades.forEach(t => { const d = new Date(t.closeTime || t.openTime); wdProfit[d.getDay()] += t.netProfit; wdCount[d.getDay()]++; hrProfit[d.getHours()] += t.netProfit; hrCount[d.getHours()]++; });
-    
     const renderBar = (id, labels, data, colorArr, title) => {
         const chartId = id + "Chart"; if (window[chartId]) window[chartId].destroy();
         window[chartId] = new Chart(document.getElementById(id).getContext("2d"), { type: "bar", data: { labels, datasets: [{ data, backgroundColor: colorArr }] }, options: { plugins: { legend: { display: false } }, scales: { y: { title: { display: true, text: title } } } } });
