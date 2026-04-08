@@ -91,8 +91,13 @@ function handleAnalyze() {
     globalEAKey = eaSelect ? eaSelect.value : "SMA";
     const reader = new FileReader();
     reader.onload = (e) => {
-        parseCsv(e.target.result);
-        buildAll();
+                try {
+            parseCsv(e.target.result);
+            buildAll();
+                            } catch (err) {
+            alert("❌ CSV 分析錯誤:\n\n" + err.message + "\n\n請檢查瀏覽器控制台獲取詳細資訊。");
+            console.error("Analysis error:", err);
+        }
     };
     reader.readAsText(file);
 }
