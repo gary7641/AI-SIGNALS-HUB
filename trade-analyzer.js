@@ -220,7 +220,7 @@ document.addEventListener("click", (e) => {
 });
 
 function expandBody(id) {
-    const body = document.getElementById(id);
+    const body = document.getElementById(chartId);
     if (body) { body.classList.remove("collapsed"); body.style.maxHeight = body.scrollHeight + "px"; }
 }
 
@@ -244,8 +244,8 @@ function resetView() {
     globalTrades = []; globalBySymbol = {}; mfeMaeMode = "pips"; cumulativeMode = "all";
     [equityChart, weekdayChart, symbolProfitChart, mfeChart, maeChart, holdingChart, symbolCumulativeChart, symbolWeekdayProfitChart, symbolWeekdayCountChart, symbolHourlyProfitChart, symbolHourlyCountChart].forEach(c => c && c.destroy());
     equityChart = weekdayChart = symbolProfitChart = mfeChart = maeChart = holdingChart = symbolCumulativeChart = symbolWeekdayProfitChart = symbolWeekdayCountChart = symbolHourlyProfitChart = symbolHourlyCountChart = null;
-    ["summaryCardsSection", "symbolSection", "symbolDetailSection", "swotSection", "martinSection"].forEach(id => { const el = document.getElementById(id); if (el) el.style.display = "none"; });
-    ["symbolButtons", "symbolMiniCharts", "symbolStats", "martinTables", "swotST", "swotS", "swotSW", "swotT", "swotW", "swotOT", "swotO", "swotOW"].forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = ""; });
+    ["summaryCardsSection", "symbolSection", "symbolDetailSection", "swotSection", "martinSection"].forEach(id => { const el = document.getElementById(chartId); if (el) el.style.display = "none"; });
+    ["symbolButtons", "symbolMiniCharts", "symbolStats", "martinTables", "swotST", "swotS", "swotSW", "swotT", "swotW", "swotOT", "swotO", "swotOW"].forEach(id => { const el = document.getElementById(chartId); if (el) el.innerHTML = ""; });
     const fileInput = document.getElementById("csvFile"); if (fileInput) fileInput.value = "";
     if (document.getElementById("analyzerMenuBar")) document.getElementById("analyzerMenuBar").style.display = "none";
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -318,7 +318,7 @@ function renderSymbolButtons(acc) { // FIX: Accept acc as parameter
 function renderSymbol(symbol) {
     const trades = symbol === "ALL" ? globalTrades : globalBySymbol[symbol] || [];
     if (!trades.length) return;
-    ["symbolDetailSection", "swotSection"].forEach(id => document.getElementById(id).style.display = "block");
+    ["symbolDetailSection", "swotSection"].forEach(id => document.getElementById(chartId).style.display = "block");
     expandBody("symbolDetailBody"); expandBody("swotBody");
     document.getElementById("symbolTitle").textContent = symbol === "ALL" ? "Symbol 深入分析 – All Symbols" : `Symbol 深入分析 – ${symbol}`;
     document.getElementById("cumSwitchWrapper").style.display = symbol === "ALL" ? "flex" : "none";
@@ -371,7 +371,7 @@ function renderSymbolExtraCharts(symbol, trades) {
     trades.forEach(t => { const d = new Date(t.closeTime || t.openTime); wdProfit[d.getDay()] += t.netProfit; wdCount[d.getDay()]++; hrProfit[d.getHours()] += t.netProfit; hrCount[d.getHours()]++; });
     const renderBar = (id, labels, data, colorArr, title) => {
         const chartId = id + "Chart"; if (window[chartId]) window[chartId].destroy();
-        window[chartId] = new Chart(document.getElementById(id).getContext("2d"), { type: "bar", data: { labels, datasets: [{ data, backgroundColor: colorArr }] }, options: { plugins: { legend: { display: false } }, scales: { y: { title: { display: true, text: title } } } } });
+        window[chartId] = new Chart(document.getElementById(chartId).getContext("2d"), { type: "bar", data: { labels, datasets: [{ data, backgroundColor: colorArr }] }, options: { plugins: { legend: { display: false } }, scales: { y: { title: { display: true, text: title } } } } });
     };
     renderBar("symbolWeekdayProfit", ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], wdProfit, wdProfit.map(v => v >= 0 ? "#22d3ee" : "#ef4444"), "Profit");
     renderBar("symbolWeekdayCount", ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], wdCount, "#6366f1", "Trades");
@@ -380,7 +380,7 @@ function renderSymbolExtraCharts(symbol, trades) {
 }
 
 function scrollToAnalyzerSection(id) {
-    const el = document.getElementById(id);
+    const el = document.getElementById(chartId);
     if (el && el.style.display !== "none") el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
