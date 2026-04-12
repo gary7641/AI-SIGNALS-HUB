@@ -579,11 +579,40 @@ function renderSummaryCards(acc) {
 
   if (radarAlgoScore)
     radarAlgoScore.textContent = "–";
+  
+  // Render simple radar chart with available stats
+  const ctxEl = document.getElementById("radarChart");
+  if (ctxEl && radarChart) radarChart.destroy();
+  if (ctxEl) {
+    const winRatePct = stats.winRate * 100;
+    const lossPct = (1 - stats.winRate) * 100;
+    const pfNormalized = Math.min(100, (stats.profitFactor / 3) * 100);
+    const ddNormalized = Math.max(0, 100 - (stats.maxDrawdown / 100));
+    radarChart = new Chart(ctxEl.getContext("2d"), {
+      type: "radar",
+      data: {
+        labels: ["Win Rate", "Loss Rate", "Profit Factor", "Max DD", "Trades", "Expectancy"],
+        datasets: [{
+          label: "EA Performance",
+          data: [winRatePct, 100 - lossPct, pfNormalized, ddNormalized, Math.min(100, (stats.totalTrades / 50) * 100), Math.min(100, Math.max(0, stats.expectancy * 10))],
+          backgroundColor: "rgba(14, 165, 233, 0.25)",
+          borderColor: "#0ea5e9",
+          borderWidth: 2,
+          pointBackgroundColor: "#0ea5e9",
+          pointRadius: 3
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: { r: { beginAtZero: true, min: 0, max: 100, ticks: { stepSize: 20 } } }
+      }
+    });
+  }
 }
 
 
-function renderRadarChart(accountStats) {
-  const ctxEl = document.getElementById("radarChart");
+function renderRadarChart(accountStat
+                          
   if (!ctxEl) return;
 
   if (radarChart) radarChart.destroy();
