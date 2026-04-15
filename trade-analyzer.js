@@ -1005,6 +1005,7 @@ function renderMartinTables(symbol, tablePerSide) {
           <th>SUM Pips</th>
           <th>Cum Profit</th>
           <th>Win Rate %</th>
+                  <th>意義</th>
           <th>Min Win Profit</th>
           <th>Symbol/Side TOTAL Profit</th>
           <th>Total Trades</th>
@@ -1047,6 +1048,7 @@ function renderMartinTables(symbol, tablePerSide) {
         <td>${r.levelSumPips.toFixed(1)}</td>
         <td>${r.cumulativeProfit.toFixed(2)}</td>
         <td>${winRate.toFixed(1)}%</td>
+                <td>此層勝率</td>
         <td>${minWinText}</td>
         <td>${r.totalProfit.toFixed(2)}</td>
         <td>${r.totalTrades}</td>
@@ -1317,6 +1319,7 @@ function renderSymbolExtraCharts(symbol, trades) {
             label: "Cumulative Profit",
             data: cumData,
             borderColor: "#2563eb",
+                        borderWidth: 1,
             fill: false,
             pointRadius: 0,
             tension: 0.15
