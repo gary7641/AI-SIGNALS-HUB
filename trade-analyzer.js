@@ -1278,6 +1278,7 @@ function renderSymbolExtraCharts(symbol, trades) {
         label: symKey,
         data,
         borderColor: c,
+                  borderWidth: 1,
         fill: false,
         pointRadius: 0,
         tension: 0.15
