@@ -8,6 +8,12 @@
 /* Palette：跟 AI Signal Portal，用 body[data-theme] 的變數 */
 :root {
   /* 這裏只定義中性數值，不用顏色 */
+    /* CSS Variables for consistent styling across the application */
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --border-radius: 8px;
+  --transition-speed: 0.3s;
 }
 
 /* 顏色全部由 index.html 內的 body[data-theme] 控制：
