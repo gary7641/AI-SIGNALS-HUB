@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI SIGNALS HUB - Logo Preview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            text-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .logo-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .logo-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .logo-preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 120px;
+            margin-bottom: 20px;
+        }
+        
+        /* Scheme 1: Tech Gradient with Signal Icon */
+        .logo-scheme1 {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .signal-icon {
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+        
+        .signal-wave {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid;
+            border-radius: 50%;
+            border-color: #667eea transparent transparent transparent;
+            animation: rotate 2s linear infinite;
+        }
+        
+        .signal-wave:nth-child(2) {
+            border-color: transparent #764ba2 transparent transparent;
+            animation-delay: -1s;
+        }
+        
+        .signal-dot {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .logo-text-gradient {
+            font-size: 2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+        
+        /* Scheme 2: Minimalist Neural Network */
+        .logo-scheme2 {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .neural-icon {
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+        
+        .neural-node {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #4F46E5;
+            border-radius: 50%;
+        }
+        
+        .neural-node:nth-child(1) { top: 0; left: 20px; }
+        .neural-node:nth-child(2) { top: 20px; left: 0; }
+        .neural-node:nth-child(3) { top: 20px; left: 40px; }
+        .neural-node:nth-child(4) { top: 40px; left: 20px; }
+        
+        .neural-line {
+            position: absolute;
+            height: 2px;
+            background: #4F46E5;
+            opacity: 0.3;
+        }
+        
+        .line1 { width: 30px; top: 5px; left: 20px; transform: rotate(45deg); }
+        .line2 { width: 30px; top: 5px; left: 10px; transform: rotate(-45deg); }
+        .line3 { width: 30px; top: 35px; left: 10px; transform: rotate(45deg); }
+        .line4 { width: 30px; top: 35px; left: 20px; transform: rotate(-45deg); }
+        
+        .logo-text-modern {
+            font-size: 2em;
+            font-weight: 700;
+            color: #1F2937;
+            letter-spacing: -1px;
+        }
+        
+        .logo-text-modern .ai {
+            color: #4F46E5;
+            font-weight: 900;
+        }
+        
+        /* Scheme 3: Broadcast Signal Design */
+        .logo-scheme3 {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .broadcast-icon {
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+        
+        .broadcast-circle {
+            position: absolute;
+            border: 2px solid #10B981;
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+        
+        .broadcast-circle:nth-child(1) {
+            width: 20px;
+            height: 20px;
+            top: 15px;
+            left: 15px;
+            animation: pulse 2s ease-out infinite;
+        }
+        
+        .broadcast-circle:nth-child(2) {
+            width: 35px;
+            height: 35px;
+            top: 7.5px;
+            left: 7.5px;
+            animation: pulse 2s ease-out 0.5s infinite;
+        }
+        
+        .broadcast-circle:nth-child(3) {
+            width: 50px;
+            height: 50px;
+            top: 0;
+            left: 0;
+            animation: pulse 2s ease-out 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.6; }
+            50% { opacity: 0.3; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        
+        .logo-text-bold {
+            font-size: 2em;
+            font-weight: 800;
+            color: #059669;
+            letter-spacing: -1px;
+        }
+        
+        .logo-text-bold .signals {
+            color: #10B981;
+        }
+        
+        .description {
+            color: #666;
+            line-height: 1.6;
+            margin-top: 15px;
+            font-size: 0.95em;
+        }
+        
+        .features {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            background: #10B981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.7em;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI SIGNALS HUB - Logo Design Preview</h1>
+        
+        <div class="logo-grid">
+            <!-- Scheme 1: Tech Gradient -->
+            <div class="logo-card">
+                <div class="logo-title">方案 1: Tech Gradient with Signal Icon</div>
+                <div class="logo-preview">
+                    <div class="logo-scheme1">
+                        <div class="signal-icon">
+                            <div class="signal-wave"></div>
+                            <div class="signal-wave"></div>
+                            <div class="signal-dot"></div>
+                        </div>
+                        <div class="logo-text-gradient">AI SIGNALS HUB</div>
+                    </div>
+                </div>
+                <div class="description">
+                    <strong>設計概念:</strong> 使用動態旋轉信號圖標配合漸變色文字，展現科技感同未來感。紫藍色漸變代表專業同創新。
+                </div>
+                <div class="features">
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>動態旋轉動畫突出「信號」概念</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>漸變色展現科技感</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>適合深色/淺色背景</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scheme 2: Minimalist Neural -->
+            <div class="logo-card">
+                <div class="logo-title">方案 2: Minimalist Neural Network</div>
+                <div class="logo-preview">
+                    <div class="logo-scheme2">
+                        <div class="neural-icon">
+                            <div class="neural-line line1"></div>
+                            <div class="neural-line line2"></div>
+                            <div class="neural-line line3"></div>
+                            <div class="neural-line line4"></div>
+                            <div class="neural-node"></div>
+                            <div class="neural-node"></div>
+                            <div class="neural-node"></div>
+                            <div class="neural-node"></div>
+                        </div>
+                        <div class="logo-text-modern">
+                            <span class="ai">AI</span> SIGNALS HUB
+                        </div>
+                    </div>
+                </div>
+                <div class="description">
+                    <strong>設計概念:</strong> 極簡神經網絡圖標，簡潔現代。「AI」用深藍色突出，整體專業穩重。
+                </div>
+                <div class="features">
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>極簡設計易於識別</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>清晰突出AI元素</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>專業商務風格</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scheme 3: Broadcast Signal -->
+            <div class="logo-card">
+                <div class="logo-title">方案 3: Broadcast Signal Design</div>
+                <div class="logo-preview">
+                    <div class="logo-scheme3">
+                        <div class="broadcast-icon">
+                            <div class="broadcast-circle"></div>
+                            <div class="broadcast-circle"></div>
+                            <div class="broadcast-circle"></div>
+                        </div>
+                        <div class="logo-text-bold">
+                            AI <span class="signals">SIGNALS</span> HUB
+                        </div>
+                    </div>
+                </div>
+                <div class="description">
+                    <strong>設計概念:</strong> 脈衝擴散動畫象徵信號廣播，綠色系展現成長同盈利。動態效果生動有活力。
+                </div>
+                <div class="features">
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>脈衝動畫直觀展現信號傳播</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>綠色象徵盈利成長</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>醒目有活力</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
