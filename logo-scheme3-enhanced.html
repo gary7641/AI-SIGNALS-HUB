@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI SIGNALS HUB - Logo Scheme 3 Enhanced</title>
+    <title>AI SIGNALS HUB - Logo Scheme 3 Enhanced v2</title>
     <style>
         * {
             margin: 0;
@@ -38,7 +38,7 @@
         
         .subtitle {
             text-align: center;
-            color: #10B981;
+            color: #FF6B35;
             font-size: 1.2em;
             font-weight: 600;
             margin-bottom: 50px;
@@ -52,132 +52,137 @@
             gap: 20px;
             margin-bottom: 40px;
             flex-wrap: wrap;
-        }
-        
-        .logo-icon-group {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        /* Broadcast Signal Icon */
-        .broadcast-icon {
-            width: 60px;
-            height: 60px;
             position: relative;
+            min-height: 100px;
+        }
+        
+        .logo-icon-wrapper {
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+        
+        /* Broadcast Signal Icon (Background/底層) */
+        .broadcast-icon {
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
         }
         
         .broadcast-circle {
             position: absolute;
-            border: 2px solid #10B981;
+            border: 2px solid #6B7280;
             border-radius: 50%;
-            opacity: 0.6;
+            opacity: 0.3;
         }
         
         .broadcast-circle:nth-child(1) {
-            width: 24px;
-            height: 24px;
-            top: 18px;
-            left: 18px;
+            width: 32px;
+            height: 32px;
+            top: 24px;
+            left: 24px;
             animation: pulse 2s ease-out infinite;
         }
         
         .broadcast-circle:nth-child(2) {
-            width: 42px;
-            height: 42px;
-            top: 9px;
-            left: 9px;
+            width: 56px;
+            height: 56px;
+            top: 12px;
+            left: 12px;
             animation: pulse 2s ease-out 0.5s infinite;
         }
         
         .broadcast-circle:nth-child(3) {
-            width: 60px;
-            height: 60px;
+            width: 80px;
+            height: 80px;
             top: 0;
             left: 0;
             animation: pulse 2s ease-out 1s infinite;
         }
         
         @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.6; }
-            50% { opacity: 0.3; }
-            100% { transform: scale(1.5); opacity: 0; }
+            0% { transform: scale(1); opacity: 0.3; }
+            50% { opacity: 0.15; }
+            100% { transform: scale(1.3); opacity: 0; }
         }
         
-        /* Data Analyzer Elements */
-        .analyzer-icon {
+        /* Data Analyzer Elements (前面/Foreground) */
+        .analyzer-elements {
+            position: absolute;
             width: 60px;
             height: 60px;
-            position: relative;
-            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-            border-radius: 12px;
-            padding: 10px;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            top: 10px;
+            left: 10px;
+            z-index: 10;
         }
         
+        /* Bar Chart */
+        .bar-chart {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 25px;
+        }
+        
+        .bar {
+            flex: 1;
+            border-radius: 2px 2px 0 0;
+            animation: barGrow 1.5s ease-in-out infinite;
+        }
+        
+        .bar:nth-child(1) { background: #FF6B35; height: 35%; animation-delay: 0s; }
+        .bar:nth-child(2) { background: #F7931E; height: 65%; animation-delay: 0.2s; }
+        .bar:nth-child(3) { background: #FF6B35; height: 45%; animation-delay: 0.4s; }
+        .bar:nth-child(4) { background: #DC2626; height: 80%; animation-delay: 0.6s; }
+        .bar:nth-child(5) { background: #F7931E; height: 55%; animation-delay: 0.8s; }
+        
+        @keyframes barGrow {
+            0%, 100% { transform: scaleY(0.9); opacity: 0.7; }
+            50% { transform: scaleY(1.05); opacity: 1; }
+        }
+        
+        /* Waveform */
         .waveform {
             position: absolute;
             bottom: 8px;
-            left: 8px;
-            right: 8px;
-            height: 20px;
+            left: 5px;
+            right: 5px;
+            height: 18px;
         }
         
         .wave-path {
-            stroke: white;
-            stroke-width: 2;
+            stroke: #4B5563;
+            stroke-width: 2.5;
             fill: none;
             animation: waveAnimation 2s ease-in-out infinite;
         }
         
         @keyframes waveAnimation {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-        
-        .bar-chart {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            display: flex;
-            align-items: flex-end;
-            gap: 3px;
-            height: 22px;
-        }
-        
-        .bar {
-            flex: 1;
-            background: white;
-            border-radius: 2px 2px 0 0;
-            animation: barGrow 1.5s ease-in-out infinite;
-        }
-        
-        .bar:nth-child(1) { height: 40%; animation-delay: 0s; }
-        .bar:nth-child(2) { height: 70%; animation-delay: 0.2s; }
-        .bar:nth-child(3) { height: 50%; animation-delay: 0.4s; }
-        .bar:nth-child(4) { height: 85%; animation-delay: 0.6s; }
-        .bar:nth-child(5) { height: 60%; animation-delay: 0.8s; }
-        
-        @keyframes barGrow {
-            0%, 100% { transform: scaleY(0.8); opacity: 0.6; }
-            50% { transform: scaleY(1.1); opacity: 1; }
+            0%, 100% { opacity: 0.5; stroke-dashoffset: 0; }
+            50% { opacity: 0.9; }
         }
         
         /* Logo Text */
         .logo-text {
             font-size: 2.5em;
             font-weight: 800;
-            color: #059669;
+            color: #374151;
             letter-spacing: -1px;
         }
         
         .logo-text .ai {
-            color: #10B981;
+            color: #FF6B35;
         }
         
         .logo-text .signals {
-            color: #10B981;
+            color: #F7931E;
             font-weight: 900;
         }
         
@@ -198,7 +203,7 @@
         .feature-icon {
             width: 24px;
             height: 24px;
-            background: #10B981;
+            background: #FF6B35;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -228,36 +233,46 @@
             text-align: center;
             color: #6B7280;
             line-height: 1.8;
-            font-size: 1.1em;
+            font-size: 1.05em;
             padding: 0 20px;
+        }
+        
+        .description strong {
+            color: #374151;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>AI SIGNALS HUB</h1>
-        <div class="subtitle">Signal Data Analyzer Enhanced</div>
+        <div class="subtitle">Signal Data Analyzer Enhanced v2</div>
         
         <div class="logo-container">
-            <!-- Broadcast Signal Icon -->
-            <div class="broadcast-icon">
-                <div class="broadcast-circle"></div>
-                <div class="broadcast-circle"></div>
-                <div class="broadcast-circle"></div>
-            </div>
-            
-            <!-- Data Analyzer Icon -->
-            <div class="analyzer-icon">
-                <div class="bar-chart">
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
+            <!-- Logo Icon Wrapper -->
+            <div class="logo-icon-wrapper">
+                <!-- Broadcast Signal Icon (底層/Background) -->
+                <div class="broadcast-icon">
+                    <div class="broadcast-circle"></div>
+                    <div class="broadcast-circle"></div>
+                    <div class="broadcast-circle"></div>
                 </div>
-                <svg class="waveform" viewBox="0 0 44 20">
-                    <path class="wave-path" d="M 0 10 Q 5 5, 10 10 T 20 10 T 30 10 T 44 10"/>
-                </svg>
+                
+                <!-- Data Analyzer Elements (前面/Foreground) -->
+                <div class="analyzer-elements">
+                    <!-- Bar Chart -->
+                    <div class="bar-chart">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                    
+                    <!-- Waveform -->
+                    <svg class="waveform" viewBox="0 0 50 18">
+                        <path class="wave-path" d="M 0 9 Q 6 3, 12 9 T 24 9 T 36 9 T 50 9"/>
+                    </svg>
+                </div>
             </div>
             
             <!-- Logo Text -->
@@ -267,39 +282,39 @@
         </div>
         
         <div class="description">
-            <strong>設計概念:</strong> 結合信號廣播同數據分析元素，展現平台既雙重功能。脈衝同心圓象徵信號傳播，柱狀圖同波形圖代表數據分析能力。綠色系統一展現盈利成長。
+            <strong>設計概念:</strong> 廣播信號圖標作為底層背景（深灰），柱狀圖同波形圖置於前面（橙色、紅色），層次分明。深灰色象徵穩重專業，橙紅色代表活力同警示。移除綠色方形背景，整體更簡潔現代。
         </div>
         
         <div class="features">
             <div class="feature-item">
                 <div class="feature-icon">✓</div>
                 <div class="feature-text">
-                    <strong>Signal Broadcasting</strong>
-                    <span>脈衝擴散動畫直觀展現信號傳播</span>
+                    <strong>Layered Design</strong>
+                    <span>廣播信號底層，數據元素前置</span>
                 </div>
             </div>
             
             <div class="feature-item">
                 <div class="feature-icon">✓</div>
                 <div class="feature-text">
-                    <strong>Data Analytics</strong>
-                    <span>柱狀圖同波形圖展現數據分析功能</span>
+                    <strong>Dynamic Data Elements</strong>
+                    <span>橙紅色柱狀圖同深灰波形圖</span>
                 </div>
             </div>
             
             <div class="feature-item">
                 <div class="feature-icon">✓</div>
                 <div class="feature-text">
-                    <strong>Dynamic Elements</strong>
-                    <span>多重動畫效果生動有層次感</span>
+                    <strong>Professional Colors</strong>
+                    <span>深灰、橙、紅配色方案</span>
                 </div>
             </div>
             
             <div class="feature-item">
                 <div class="feature-icon">✓</div>
                 <div class="feature-text">
-                    <strong>Professional Identity</strong>
-                    <span>綠色主題象徵盈利同專業可靠</span>
+                    <strong>Clean Modern Look</strong>
+                    <span>移除方形背景更簡潔</span>
                 </div>
             </div>
         </div>
