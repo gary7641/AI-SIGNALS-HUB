@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI SIGNALS HUB - Pastel Logo Showcase</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #F3F4F6;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1F2937;
+            font-size: 2.2em;
+            margin-bottom: 50px;
+        }
+
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .logo-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo-title {
+            color: #4B5563;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        /* Common styles for all icons */
+        .icon-box {
+            width: 120px;
+            height: 120px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-text {
+            font-size: 1.8em;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        /* DESIGN 1: Fintech & Precision (Pastel Blue/Mint) */
+        .design-1-box {
+            background: #E0F2FE; /* Pastel Blue */
+        }
+
+        .d1-compass {
+            width: 70px;
+            height: 70px;
+            border: 3px solid #0EA5E9;
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .d1-needle {
+            width: 4px;
+            height: 40px;
+            background: #0EA5E9;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .d1-needle::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -3px;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 10px solid #0EA5E9;
+        }
+
+        .d1-data-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #10B981; /* Mint/Green */
+            border-radius: 50%;
+        }
+
+        .dot-1 { top: 10px; right: 10px; }
+        .dot-2 { bottom: 15px; left: 10px; }
+
+        .text-1 .ai { color: #0EA5E9; }
+        .text-1 .signals { color: #10B981; }
+
+        /* DESIGN 2: Big Data & Gold/Forex (Pastel Purple/Gold) */
+        .design-2-box {
+            background: #F3E8FF; /* Pastel Purple */
+        }
+
+        .d2-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            padding: 15px;
+        }
+
+        .d2-block {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            background: #A855F7; /* Purple */
+            opacity: 0.6;
+        }
+
+        .d2-block.gold {
+            background: #F59E0B; /* Gold/Orange */
+            opacity: 1;
+        }
+
+        .d2-currency {
+            position: absolute;
+            font-weight: 900;
+            color: #F59E0B;
+            font-size: 24px;
+            bottom: 20px;
+            right: 25px;
+        }
+
+        .text-2 .ai { color: #A855F7; }
+        .text-2 .signals { color: #F59E0B; }
+
+        /* DESIGN 3: Analytics & Growth (Pastel Orange/Gray) */
+        .design-3-box {
+            background: #FFEDD5; /* Pastel Orange */
+        }
+
+        .d3-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 5px;
+        }
+
+        .d3-bar {
+            width: 8px;
+            border-radius: 4px;
+            background: #F97316;
+        }
+
+        .d3-line {
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background: #6B7280; /* Gray */
+            transform: rotate(-30deg);
+            top: 45px;
+        }
+
+        .d3-line::after {
+            content: '';
+            position: absolute;
+            right: -5px;
+            top: -4px;
+            width: 10px;
+            height: 10px;
+            background: #6B7280;
+            border-radius: 50%;
+        }
+
+        .text-3 .ai { color: #F97316; }
+        .text-3 .signals { color: #6B7280; }
+
+        .desc {
+            color: #6B7280;
+            font-size: 0.95em;
+            text-align: center;
+            line-height: 1.6;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI SIGNALS HUB - 粉色系設計方案</h1>
+        
+        <div class="logo-grid">
+            <!-- Design 1: Fintech Precision -->
+            <div class="logo-card">
+                <div class="logo-title">方案 A: Fintech Precision</div>
+                <div class="icon-box design-1-box">
+                    <div class="d1-compass">
+                        <div class="d1-needle"></div>
+                    </div>
+                    <div class="d1-data-dot dot-1"></div>
+                    <div class="d1-data-dot dot-2"></div>
+                </div>
+                <div class="logo-text text-1">
+                    <span class="ai">AI</span> <span class="signals">SIGNALS</span>
+                </div>
+                <p class="desc">
+                    粉藍色調代表科技，圓針象徵精準度，綠色圓點代表分析數據。
+                </p>
+            </div>
+
+            <!-- Design 2: Big Data & Gold -->
+            <div class="logo-card">
+                <div class="logo-title">方案 B: Global Asset Data</div>
+                <div class="icon-box design-2-box">
+                    <div class="d2-grid">
+                        <div class="d2-block"></div>
+                        <div class="d2-block gold"></div>
+                        <div class="d2-block"></div>
+                        <div class="d2-block gold"></div>
+                        <div class="d2-block"></div>
+                        <div class="d2-block gold"></div>
+                    </div>
+                    <div class="d2-currency">$</div>
+                </div>
+                <div class="logo-text text-2">
+                    <span class="ai">AI</span> <span class="signals">SIGNALS</span>
+                </div>
+                <p class="desc">
+                    粉紫色網格代表大數據，金色元素象徵黃金同外幣資產分析。
+                </p>
+            </div>
+
+            <!-- Design 3: Analytics Growth -->
+            <div class="logo-card">
+                <div class="logo-title">方案 C: Analytics Growth</div>
+                <div class="icon-box design-3-box">
+                    <div class="d3-chart">
+                        <div class="d3-bar" style="height: 20px;"></div>
+                        <div class="d3-bar" style="height: 35px;"></div>
+                        <div class="d3-bar" style="height: 25px;"></div>
+                        <div class="d3-bar" style="height: 45px;"></div>
+                    </div>
+                    <div class="d3-line"></div>
+                </div>
+                <div class="logo-text text-3">
+                    <span class="ai">AI</span> <span class="signals">SIGNALS</span>
+                </div>
+                <p class="desc">
+                    粉橙色調，柱狀圖同趨勢線展現金融分析同盈利成長。
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
