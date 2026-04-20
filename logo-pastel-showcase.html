@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI SIGNALS HUB - Pastel Logo Showcase V2</title>
+    <title>AI SIGNALS HUB - Pastel Logo Showcase V2 (Elite Edition)</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -31,7 +31,9 @@
             flex-direction: column;
             align-items: center;
             border: 1px solid #F3F4F6;
+            transition: transform 0.3s ease;
         }
+        .logo-card:hover { transform: translateY(-5px); }
 
         .icon-wrapper {
             width: 140px;
@@ -42,61 +44,80 @@
             justify-content: center;
             margin-bottom: 35px;
             position: relative;
+            overflow: hidden;
         }
-
-        .logo-text { font-size: 2em; font-weight: 900; letter-spacing: -0.5px; }
-
-        /* DESIGN D: Fintech & Gold (Pastel Pink) */
-        .bg-pink { background: #FCE7F3; } /* 粉紅底 */
+        .logo-text { font-size: 2em; font-weight: 900; letter-spacing: -0.5px; margin-top: 10px; }
+        
+        /* DESIGN D: Fintech Precision */
+        .bg-pink { background: #FCE7F3; }
         .d-icon { position: relative; width: 80px; height: 80px; }
-        .d-crosshair {
-            position: absolute; width: 100%; height: 100%;
-            border: 2px dashed #F472B6; border-radius: 50%;
-        }
+        .d-crosshair { position: absolute; width: 100%; height: 100%; border: 2px dashed #F472B6; border-radius: 50%; }
         .d-gold {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 35px; height: 50px; background: #F59E0B; border-radius: 4px;
             display: flex; align-items: center; justify-content: center;
             color: white; font-weight: bold; font-size: 24px;
-            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
         }
         .text-d .ai { color: #F472B6; }
         .text-d .signals { color: #F59E0B; }
 
-        /* DESIGN E: Big Data Forex (Pastel Blue/Mint) */
-        .bg-blue { background: #E0F2FE; } /* 粉藍底 */
+        /* DESIGN E: Big Data Forex */
+        .bg-blue { background: #E0F2FE; }
         .e-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
         .e-dot { width: 14px; height: 14px; background: #10B981; border-radius: 3px; opacity: 0.6; }
         .e-dot.active { opacity: 1; transform: scale(1.1); }
-        .e-wave {
-            position: absolute; width: 110%; height: 4px; background: #0EA5E9;
-            top: 50%; left: -5%; transform: rotate(-20deg); border-radius: 2px;
-        }
+        .e-wave { position: absolute; width: 110%; height: 4px; background: #0EA5E9; top: 50%; left: -5%; transform: rotate(-20deg); }
         .text-e .ai { color: #0EA5E9; }
         .text-e .signals { color: #10B981; }
 
-        /* DESIGN F: Smart Analytics (Pastel Purple/Gray) */
-        .bg-purple { background: #F3E8FF; } /* 粉紫底 */
+        /* DESIGN F: Smart Analytics */
+        .bg-purple { background: #F3E8FF; }
         .f-chart { display: flex; align-items: flex-end; gap: 8px; z-index: 2; }
         .f-bar { width: 12px; background: #8B5CF6; border-radius: 6px; }
-        .f-ring {
-            position: absolute; width: 100px; height: 100px;
-            border: 5px solid #9CA3AF; border-radius: 50%; opacity: 0.15;
-        }
-        .f-ai-eye {
-            position: absolute; top: 25px; right: 25px; width: 12px; height: 12px;
-            background: #8B5CF6; border-radius: 50%;
-        }
+        .f-ring { position: absolute; width: 100px; height: 100px; border: 5px solid #9CA3AF; border-radius: 50%; opacity: 0.15; }
         .text-f .ai { color: #8B5CF6; }
         .text-f .signals { color: #6B7280; }
 
+        /* DESIGN G: Signal Hub Elite (NEW) */
+        .bg-indigo { background: #E0E7FF; }
+        .g-container { position: relative; width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; }
+        .g-signal {
+            position: absolute; bottom: 15px; width: 80px; height: 40px;
+            border: 4px solid #6366F1; border-bottom: none; border-radius: 50% 50% 0 0;
+            opacity: 0.2;
+        }
+        .g-signal-mid {
+            position: absolute; bottom: 15px; width: 50px; height: 25px;
+            border: 4px solid #6366F1; border-bottom: none; border-radius: 50% 50% 0 0;
+            opacity: 0.4;
+        }
+        .g-bars { display: flex; align-items: flex-end; gap: 6px; z-index: 5; margin-bottom: 5px; }
+        .g-bar { width: 12px; background: #4F46E5; border-radius: 4px; }
+        .g-wave {
+            position: absolute; top: 30%; width: 90px; height: 30px;
+            border-bottom: 3px solid #F43F5E; border-radius: 0 0 50% 50%;
+            transform: rotate(-8deg); z-index: 6;
+        }
+        .text-g .ai { color: #4F46E5; font-weight: 900; }
+        .text-g .signals { color: #6366F1; }
+
         .tag { font-size: 0.8em; font-weight: 700; color: #9CA3AF; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
         .desc { font-size: 0.95em; color: #6B7280; text-align: center; margin-top: 20px; line-height: 1.6; }
+
+        /* Inventory Table */
+        .inventory-section { margin-top: 80px; padding: 40px; background: white; border-radius: 32px; border: 1px solid #F3F4F6; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
+        .inventory-section h2 { margin-bottom: 25px; color: #111827; font-size: 1.5em; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 18px; text-align: left; border-bottom: 1px solid #F3F4F6; }
+        th { background: #F9FAFB; color: #6B7280; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; font-weight: 700; }
+        .v-badge { padding: 4px 10px; border-radius: 6px; font-size: 0.85em; font-weight: 600; }
+        .v-v1 { background: #F3F4F6; color: #6B7280; }
+        .v-v2 { background: #EEF2FF; color: #6366F1; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>AI SIGNALS HUB - 全新粉色系方案</h1>
+        <h1>AI SIGNALS HUB - Logo Showcase V2</h1>
         
         <div class="logo-grid">
             <!-- 方案 D -->
@@ -135,7 +156,6 @@
                 <div class="tag">方案 F: Smart Analytics</div>
                 <div class="icon-wrapper bg-purple">
                     <div class="f-ring"></div>
-                    <div class="f-ai-eye"></div>
                     <div class="f-chart">
                         <div class="f-bar" style="height: 30px;"></div>
                         <div class="f-bar" style="height: 55px;"></div>
@@ -147,7 +167,57 @@
                 </div>
                 <p class="desc">粉紫與淺灰組合，<br>智力圓環象徵高科技 AI 分析。</p>
             </div>
+
+            <!-- 方案 G: Signal Hub Elite (Refined 方案三) -->
+            <div class="logo-card">
+                <div class="tag">方案 G: Signal Hub Elite</div>
+                <div class="icon-wrapper bg-indigo" style="border-radius: 50%;"> <!-- No square: Circular base -->
+                    <div class="g-container">
+                        <div class="g-signal"></div>
+                        <div class="g-signal-mid"></div>
+                        <div class="g-bars">
+                            <div class="g-bar" style="height: 25px;"></div>
+                            <div class="g-bar" style="height: 50px;"></div>
+                            <div class="g-bar" style="height: 35px;"></div>
+                        </div>
+                        <div class="g-wave"></div>
+                    </div>
+                </div>
+                <div class="logo-text text-g">
+                    <span class="ai">AI</span><span class="signals">SIGNALS</span>
+                </div>
+                <p class="desc">進化版：底部廣播波段(Base)，<br>前方配置數據柱狀圖與動態波形。</p>
+            </div>
         </div>
+
+        <!-- Table Inventory Section -->
+        <section class="inventory-section">
+            <h2>Inventory Table - Logo Version Tracking</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Version</th>
+                        <th>Options</th>
+                        <th>Key Elements</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="v-badge v-v1">V1</span></td>
+                        <td>A, B, C</td>
+                        <td>Traditional tech icons, sharp colors</td>
+                        <td>Archived</td>
+                    </tr>
+                    <tr>
+                        <td><span class="v-badge v-v2">V2</span></td>
+                        <td>D, E, F, G</td>
+                        <td>Pastel themes, Gold, Big Data, Signal Hub Elite</td>
+                        <td>Active</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
     </div>
 </body>
 </html>
