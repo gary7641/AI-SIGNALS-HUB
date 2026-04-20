@@ -32,8 +32,22 @@
             align-items: center;
             border: 1px solid #F3F4F6;
             transition: transform 0.3s ease;
+            position: relative;
         }
         .logo-card:hover { transform: translateY(-5px); }
+
+        /* Color Square Indicator */
+        .color-sq {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .sq-gray { background: #9CA3AF; }
+        .sq-indigo { background: #6366F1; }
+        .sq-gold { background: #F59E0B; }
 
         .icon-wrapper {
             width: 140px;
@@ -78,7 +92,7 @@
         .text-f .ai { color: #8B5CF6; }
         .text-f .signals { color: #6B7280; }
 
-        /* DESIGN G: Signal Hub Elite (NEW) */
+        /* DESIGN G: Signal Hub Elite */
         .bg-indigo { background: #E0E7FF; }
         .g-container { position: relative; width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; }
         .g-signal {
@@ -101,7 +115,7 @@
         .text-g .ai { color: #4F46E5; font-weight: 900; }
         .text-g .signals { color: #6366F1; }
 
-        .tag { font-size: 0.8em; font-weight: 700; color: #9CA3AF; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .tag { font-size: 0.8em; font-weight: 700; color: #9CA3AF; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; }
         .desc { font-size: 0.95em; color: #6B7280; text-align: center; margin-top: 20px; line-height: 1.6; }
 
         /* Inventory Table */
@@ -110,9 +124,7 @@
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th, td { padding: 18px; text-align: left; border-bottom: 1px solid #F3F4F6; }
         th { background: #F9FAFB; color: #6B7280; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; font-weight: 700; }
-        .v-badge { padding: 4px 10px; border-radius: 6px; font-size: 0.85em; font-weight: 600; }
-        .v-v1 { background: #F3F4F6; color: #6B7280; }
-        .v-v2 { background: #EEF2FF; color: #6366F1; }
+        .v-badge { padding: 4px 10px; border-radius: 6px; font-size: 0.85em; font-weight: 600; display: flex; align-items: center; }
     </style>
 </head>
 <body>
@@ -122,7 +134,7 @@
         <div class="logo-grid">
             <!-- 方案 D -->
             <div class="logo-card">
-                <div class="tag">方案 D: Fintech Precision</div>
+                <div class="tag"><span class="color-sq sq-indigo"></span>方案 D: Fintech Precision</div>
                 <div class="icon-wrapper bg-pink">
                     <div class="d-icon">
                         <div class="d-crosshair"></div>
@@ -137,7 +149,7 @@
 
             <!-- 方案 E -->
             <div class="logo-card">
-                <div class="tag">方案 E: Big Data Forex</div>
+                <div class="tag"><span class="color-sq sq-indigo"></span>方案 E: Big Data Forex</div>
                 <div class="icon-wrapper bg-blue">
                     <div class="e-wave"></div>
                     <div class="e-grid">
@@ -153,7 +165,7 @@
 
             <!-- 方案 F -->
             <div class="logo-card">
-                <div class="tag">方案 F: Smart Analytics</div>
+                <div class="tag"><span class="color-sq sq-indigo"></span>方案 F: Smart Analytics</div>
                 <div class="icon-wrapper bg-purple">
                     <div class="f-ring"></div>
                     <div class="f-chart">
@@ -168,10 +180,10 @@
                 <p class="desc">粉紫與淺灰組合，<br>智力圓環象徵高科技 AI 分析。</p>
             </div>
 
-            <!-- 方案 G: Signal Hub Elite (Refined 方案三) -->
+            <!-- 方案 G -->
             <div class="logo-card">
-                <div class="tag">方案 G: Signal Hub Elite</div>
-                <div class="icon-wrapper bg-indigo" style="border-radius: 50%;"> <!-- No square: Circular base -->
+                <div class="tag"><span class="color-sq sq-gold"></span>方案 G: Signal Hub Elite</div>
+                <div class="icon-wrapper bg-indigo" style="border-radius: 50%;">
                     <div class="g-container">
                         <div class="g-signal"></div>
                         <div class="g-signal-mid"></div>
@@ -190,30 +202,35 @@
             </div>
         </div>
 
-        <!-- Table Inventory Section -->
         <section class="inventory-section">
             <h2>Inventory Table - Logo Version Tracking</h2>
             <table>
                 <thead>
                     <tr>
                         <th>Version</th>
-                        <th>Options</th>
+                        <th>Add color square indicators to Logo Cards and Inventory TableOptions</th>
                         <th>Key Elements</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="v-badge v-v1">V1</span></td>
+                        <td><span class="v-badge"><span class="color-sq sq-gray"></span> V1</span></td>
                         <td>A, B, C</td>
-                        <td>Traditional tech icons, sharp colors</td>
-                        <td>Archived</td>
+                        <td>Traditional tech icons</td>
+                        <td><span class="color-sq sq-gray"></span> Archived</td>
                     </tr>
                     <tr>
-                        <td><span class="v-badge v-v2">V2</span></td>
-                        <td>D, E, F, G</td>
-                        <td>Pastel themes, Gold, Big Data, Signal Hub Elite</td>
-                        <td>Active</td>
+                        <td><span class="v-badge"><span class="color-sq sq-indigo"></span> V2</span></td>
+                        <td>D, E, F</td>
+                        <td>Pastel themes, Gold, Big Data</td>
+                        <td><span class="color-sq sq-indigo"></span> Active</td>
+                    </tr>
+                    <tr>
+                        <td><span class="v-badge"><span class="color-sq sq-gold"></span> V2.1</span></td>
+                        <td>G</td>
+                        <td>Signal Hub Elite Edition</td>
+                        <td><span class="color-sq sq-gold"></span> Featured</td>
                     </tr>
                 </tbody>
             </table>
