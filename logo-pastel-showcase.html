@@ -3,272 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI SIGNALS HUB - Pastel Logo Showcase</title>
+    <title>AI SIGNALS HUB - Pastel Logo Showcase V2</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            background: #F3F4F6;
+            background: #F9FAFB;
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 60px 20px;
+            color: #374151;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            text-align: center;
-            color: #1F2937;
-            font-size: 2.2em;
-            margin-bottom: 50px;
-        }
-
+        .container { max-width: 1100px; margin: 0 auto; }
+        h1 { text-align: center; font-size: 2.2em; margin-bottom: 60px; font-weight: 800; color: #111827; }
+        
         .logo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 40px;
         }
-
+        
         .logo-card {
             background: white;
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-radius: 32px;
+            padding: 50px 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
             display: flex;
             flex-direction: column;
             align-items: center;
+            border: 1px solid #F3F4F6;
         }
 
-        .logo-title {
-            color: #4B5563;
-            font-size: 1.1em;
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-
-        /* Common styles for all icons */
-        .icon-box {
-            width: 120px;
-            height: 120px;
-            border-radius: 24px;
+        .icon-wrapper {
+            width: 140px;
+            height: 140px;
+            border-radius: 35px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 30px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .logo-text {
-            font-size: 1.8em;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        /* DESIGN 1: Fintech & Precision (Pastel Blue/Mint) */
-        .design-1-box {
-            background: #E0F2FE; /* Pastel Blue */
-        }
-
-        .d1-compass {
-            width: 70px;
-            height: 70px;
-            border: 3px solid #0EA5E9;
-            border-radius: 50%;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .d1-needle {
-            width: 4px;
-            height: 40px;
-            background: #0EA5E9;
-            border-radius: 2px;
+            margin-bottom: 35px;
             position: relative;
         }
 
-        .d1-needle::before {
-            content: '';
-            position: absolute;
-            top: -5px;
-            left: -3px;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-bottom: 10px solid #0EA5E9;
+        .logo-text { font-size: 2em; font-weight: 900; letter-spacing: -0.5px; }
+
+        /* DESIGN D: Fintech & Gold (Pastel Pink) */
+        .bg-pink { background: #FCE7F3; } /* 粉紅底 */
+        .d-icon { position: relative; width: 80px; height: 80px; }
+        .d-crosshair {
+            position: absolute; width: 100%; height: 100%;
+            border: 2px dashed #F472B6; border-radius: 50%;
         }
-
-        .d1-data-dot {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #10B981; /* Mint/Green */
-            border-radius: 50%;
+        .d-gold {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 35px; height: 50px; background: #F59E0B; border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: bold; font-size: 24px;
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
         }
+        .text-d .ai { color: #F472B6; }
+        .text-d .signals { color: #F59E0B; }
 
-        .dot-1 { top: 10px; right: 10px; }
-        .dot-2 { bottom: 15px; left: 10px; }
-
-        .text-1 .ai { color: #0EA5E9; }
-        .text-1 .signals { color: #10B981; }
-
-        /* DESIGN 2: Big Data & Gold/Forex (Pastel Purple/Gold) */
-        .design-2-box {
-            background: #F3E8FF; /* Pastel Purple */
+        /* DESIGN E: Big Data Forex (Pastel Blue/Mint) */
+        .bg-blue { background: #E0F2FE; } /* 粉藍底 */
+        .e-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+        .e-dot { width: 14px; height: 14px; background: #10B981; border-radius: 3px; opacity: 0.6; }
+        .e-dot.active { opacity: 1; transform: scale(1.1); }
+        .e-wave {
+            position: absolute; width: 110%; height: 4px; background: #0EA5E9;
+            top: 50%; left: -5%; transform: rotate(-20deg); border-radius: 2px;
         }
+        .text-e .ai { color: #0EA5E9; }
+        .text-e .signals { color: #10B981; }
 
-        .d2-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 4px;
-            padding: 15px;
+        /* DESIGN F: Smart Analytics (Pastel Purple/Gray) */
+        .bg-purple { background: #F3E8FF; } /* 粉紫底 */
+        .f-chart { display: flex; align-items: flex-end; gap: 8px; z-index: 2; }
+        .f-bar { width: 12px; background: #8B5CF6; border-radius: 6px; }
+        .f-ring {
+            position: absolute; width: 100px; height: 100px;
+            border: 5px solid #9CA3AF; border-radius: 50%; opacity: 0.15;
         }
-
-        .d2-block {
-            width: 14px;
-            height: 14px;
-            border-radius: 3px;
-            background: #A855F7; /* Purple */
-            opacity: 0.6;
+        .f-ai-eye {
+            position: absolute; top: 25px; right: 25px; width: 12px; height: 12px;
+            background: #8B5CF6; border-radius: 50%;
         }
+        .text-f .ai { color: #8B5CF6; }
+        .text-f .signals { color: #6B7280; }
 
-        .d2-block.gold {
-            background: #F59E0B; /* Gold/Orange */
-            opacity: 1;
-        }
-
-        .d2-currency {
-            position: absolute;
-            font-weight: 900;
-            color: #F59E0B;
-            font-size: 24px;
-            bottom: 20px;
-            right: 25px;
-        }
-
-        .text-2 .ai { color: #A855F7; }
-        .text-2 .signals { color: #F59E0B; }
-
-        /* DESIGN 3: Analytics & Growth (Pastel Orange/Gray) */
-        .design-3-box {
-            background: #FFEDD5; /* Pastel Orange */
-        }
-
-        .d3-chart {
-            display: flex;
-            align-items: flex-end;
-            gap: 5px;
-        }
-
-        .d3-bar {
-            width: 8px;
-            border-radius: 4px;
-            background: #F97316;
-        }
-
-        .d3-line {
-            position: absolute;
-            width: 60px;
-            height: 3px;
-            background: #6B7280; /* Gray */
-            transform: rotate(-30deg);
-            top: 45px;
-        }
-
-        .d3-line::after {
-            content: '';
-            position: absolute;
-            right: -5px;
-            top: -4px;
-            width: 10px;
-            height: 10px;
-            background: #6B7280;
-            border-radius: 50%;
-        }
-
-        .text-3 .ai { color: #F97316; }
-        .text-3 .signals { color: #6B7280; }
-
-        .desc {
-            color: #6B7280;
-            font-size: 0.95em;
-            text-align: center;
-            line-height: 1.6;
-            margin-top: 20px;
-        }
+        .tag { font-size: 0.8em; font-weight: 700; color: #9CA3AF; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .desc { font-size: 0.95em; color: #6B7280; text-align: center; margin-top: 20px; line-height: 1.6; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>AI SIGNALS HUB - 粉色系設計方案</h1>
+        <h1>AI SIGNALS HUB - 全新粉色系方案</h1>
         
         <div class="logo-grid">
-            <!-- Design 1: Fintech Precision -->
+            <!-- 方案 D -->
             <div class="logo-card">
-                <div class="logo-title">方案 A: Fintech Precision</div>
-                <div class="icon-box design-1-box">
-                    <div class="d1-compass">
-                        <div class="d1-needle"></div>
+                <div class="tag">方案 D: Fintech Precision</div>
+                <div class="icon-wrapper bg-pink">
+                    <div class="d-icon">
+                        <div class="d-crosshair"></div>
+                        <div class="d-gold">$</div>
                     </div>
-                    <div class="d1-data-dot dot-1"></div>
-                    <div class="d1-data-dot dot-2"></div>
                 </div>
-                <div class="logo-text text-1">
-                    <span class="ai">AI</span> <span class="signals">SIGNALS</span>
+                <div class="logo-text text-d">
+                    <span class="ai">AI</span><span class="signals">SIGNALS</span>
                 </div>
-                <p class="desc">
-                    粉藍色調代表科技，圓針象徵精準度，綠色圓點代表分析數據。
-                </p>
+                <p class="desc">粉紅基調象徵精準度，<br>金磚元素突顯黃金分析價值。</p>
             </div>
 
-            <!-- Design 2: Big Data & Gold -->
+            <!-- 方案 E -->
             <div class="logo-card">
-                <div class="logo-title">方案 B: Global Asset Data</div>
-                <div class="icon-box design-2-box">
-                    <div class="d2-grid">
-                        <div class="d2-block"></div>
-                        <div class="d2-block gold"></div>
-                        <div class="d2-block"></div>
-                        <div class="d2-block gold"></div>
-                        <div class="d2-block"></div>
-                        <div class="d2-block gold"></div>
+                <div class="tag">方案 E: Big Data Forex</div>
+                <div class="icon-wrapper bg-blue">
+                    <div class="e-wave"></div>
+                    <div class="e-grid">
+                        <div class="e-dot"></div><div class="e-dot active"></div><div class="e-dot"></div>
+                        <div class="e-dot active"></div><div class="e-dot"></div><div class="e-dot active"></div>
                     </div>
-                    <div class="d2-currency">$</div>
                 </div>
-                <div class="logo-text text-2">
-                    <span class="ai">AI</span> <span class="signals">SIGNALS</span>
+                <div class="logo-text text-e">
+                    <span class="ai">AI</span><span class="signals">SIGNALS</span>
                 </div>
-                <p class="desc">
-                    粉紫色網格代表大數據，金色元素象徵黃金同外幣資產分析。
-                </p>
+                <p class="desc">粉藍與粉綠交織，<br>數據網格展現外幣大數據分析。</p>
             </div>
 
-            <!-- Design 3: Analytics Growth -->
+            <!-- 方案 F -->
             <div class="logo-card">
-                <div class="logo-title">方案 C: Analytics Growth</div>
-                <div class="icon-box design-3-box">
-                    <div class="d3-chart">
-                        <div class="d3-bar" style="height: 20px;"></div>
-                        <div class="d3-bar" style="height: 35px;"></div>
-                        <div class="d3-bar" style="height: 25px;"></div>
-                        <div class="d3-bar" style="height: 45px;"></div>
+                <div class="tag">方案 F: Smart Analytics</div>
+                <div class="icon-wrapper bg-purple">
+                    <div class="f-ring"></div>
+                    <div class="f-ai-eye"></div>
+                    <div class="f-chart">
+                        <div class="f-bar" style="height: 30px;"></div>
+                        <div class="f-bar" style="height: 55px;"></div>
+                        <div class="f-bar" style="height: 40px;"></div>
                     </div>
-                    <div class="d3-line"></div>
                 </div>
-                <div class="logo-text text-3">
-                    <span class="ai">AI</span> <span class="signals">SIGNALS</span>
+                <div class="logo-text text-f">
+                    <span class="ai">AI</span><span class="signals">SIGNALS</span>
                 </div>
-                <p class="desc">
-                    粉橙色調，柱狀圖同趨勢線展現金融分析同盈利成長。
-                </p>
+                <p class="desc">粉紫與淺灰組合，<br>智力圓環象徵高科技 AI 分析。</p>
             </div>
         </div>
     </div>
