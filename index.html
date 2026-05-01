@@ -3,396 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Signal Portal</title>
+    <title>AI SIGNALS HUB - Testing Platform</title>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        :root{
-            --bg1:#ffffff;
-            --bg2:#f7f7f9;
-            --txt1:#1a1f3a;
-            --txt2:rgba(0,0,0,.6);
-            --cyan:#0d9fff;
-            --purple:#9d4edd;
-            --green:#06d6a0;
-            --red:#ef476f;
-            --border:#dee2e6
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #0F172A;
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #E2E8F0;
         }
-        body[data-theme="dark"]{
-            --bg1:#0a0e27;
-            --bg2:#1a1f3a;
-            --txt1:#e8eaf6;
-            --txt2:#9e9e9e;
-            --border:#2d3354
+        .container { max-width: 960px; margin: 0 auto; }
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-bottom: 30px; border-bottom: 1px solid #334155; margin-bottom: 40px;
         }
-        body{
-            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-            background:var(--bg1);
-            color:var(--txt1)
+        .brand { font-size: 1.4em; font-weight: 800; letter-spacing: -0.03em; }
+        .brand span { color: #38BDF8; }
+        .status-badge {
+            font-size: 0.75em; padding: 5px 10px; border-radius: 50px;
+            background: #F59E0B33; color: #F59E0B; font-weight: 600;
         }
-        .sidebar{
-            position:fixed;left:0;top:0;height:100vh;
-            background:var(--bg2);border-right:1px solid var(--border);
-            padding:20px 12px;overflow-y:auto;z-index:10;
-            width:60px;transition:width .2s;
+        .info-card {
+            background: #1E293B; padding: 24px; border-radius: 16px;
+            border: 1px solid #334155; margin-bottom: 30px;
         }
-        .sidebar:hover{width:240px}
-        .sidebar .logo-text, .sidebar .nav-text, .sidebar .quota-bar, .sidebar .nav-label{
-            opacity:0;visibility:hidden;
-            transition:opacity .2s;
+        .info-card h2 { font-size: 1.1em; color: #94A3B8; margin-bottom: 12px; }
+        .info-card p { font-size: 0.9em; color: #64748B; }
+        .module-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;
         }
-        .sidebar:hover .logo-text, .sidebar:hover .nav-text, .sidebar:hover .quota-bar, .sidebar:hover .nav-label{
-            opacity:1;visibility:visible;
+        .module-card {
+            background: #1E293B; padding: 28px 22px; border-radius: 16px;
+            border: 1px solid #334155; transition: all 0.3s ease; cursor: pointer;
+            text-decoration: none; color: #E2E8F0; display: flex; flex-direction: column; gap: 12px; border-left: 4px solid transparent;
         }
-        .sidebar .logo{
-            display:flex;align-items:center;gap:8px;
-            font-size:18px;font-weight:700;
-            margin-bottom:24px;padding:10px 0;
-            border-bottom:1px solid var(--border)
+        .module-card:hover { background: #253248; transform: translateY(-2px); }
+        .module-card:hover { border-left-color: #38BDF8; }
+        .module-card.logos:hover { border-left-color: #F59E0B; }
+        .module-card.brands:hover { border-left-color: #F43F5E; }
+        .module-card.analyzer:hover { border-left-color: #10B981; }
+        .module-icon { font-size: 2.2em; }
+        .module-title { font-size: 1.05em; font-weight: 700; color: #F1F5F9; }
+        .module-desc { font-size: 0.85em; color: #64748B; line-height: 1.5; }
+        footer {
+            margin-top: 50px; padding-top: 25px; border-top: 1px solid #334155;
+            text-align: center; font-size: 0.8em; color: #64748B;
         }
-        .sidebar .logo-icon{font-size:20px}
-        .nav-label{
-            font-size:11px;text-transform:uppercase;
-            color:var(--txt2);margin:16px 0 6px;
-            font-weight:600;letter-spacing:.8px
-        }
-        .nav-item{
-            display:flex;align-items:center;gap:8px;
-            padding:9px 10px;border-radius:8px;
-            color:var(--txt2);cursor:pointer;
-            transition:.2s;margin-bottom:2px;font-size:14px;
-            white-space:nowrap;
-        }
-        .nav-icon{width:20px;text-align:center;font-size:16px}
-        .nav-item:hover{background:var(--bg1);color:var(--txt1)}
-        .nav-item.active{background:linear-gradient(135deg,var(--cyan),var(--purple));color:#fff}
-        
-        .header{
-            position:fixed;top:0;left:60px;right:0;height:64px;
-            background:var(--bg2);border-bottom:1px solid var(--border);
-            display:flex;align-items:center;justify-content:space-between;
-            padding:0 24px;z-index:5;transition:left .2s;
-        }
-        .sidebar:hover + .header{left:240px}
-        .powered-by{font-size:11px; color:var(--txt2); font-weight:600; letter-spacing:0.5px}
-        
-        .main{
-            margin-left:60px;margin-top:64px;padding:28px;
-            min-height:calc(100vh - 64px);background:var(--bg1);
-            transition:margin-left .2s;
-        }
-        .sidebar:hover ~ .main{margin-left:240px}
-        
-        .page{display:none}
-        .page.active{display:block}
-        
-        .panel{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px}
-        .upload-controls{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end}
-        .field{display:flex;flex-direction:column;gap:4px;font-size:13px}
-        input, select{padding:6px;border-radius:6px;border:1px solid var(--border);background:var(--bg1);color:var(--txt1)}
-        
-        .primary-btn{
-            background:linear-gradient(135deg,var(--cyan),var(--purple));color:#fff;
-            border:none;border-radius:8px;padding:8px 16px;cursor:pointer;font-size:14px;
-            display:flex;align-items:center;gap:6px
-        }
-        .secondary-btn{
-            background:var(--bg1);color:var(--txt1);border:1px solid var(--border);
-            border-radius:8px;padding:8px 16px;cursor:pointer;font-size:14px
-        }
-        
-        .summary-grid{display:grid;grid-template-columns:1fr 2fr;gap:16px}
-        .radar-chart-wrapper{height:300px}
-        .equity-chart-wrapper{height:400px}
-        
-        .kpi-card{padding:12px;background:var(--bg1);border-radius:8px;border:1px solid var(--border)}
-        .kpi-value{font-size:20px;font-weight:700}
-        .progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:8px}
-        .progress-fill{height:100%;background:var(--cyan);width:0%;transition:width .3s}
-        
-        .symbol-btn{padding:6px 12px;border-radius:6px;border:1px solid var(--border);background:var(--bg1);color:var(--txt1);cursor:pointer;font-size:12px}
-        .symbol-btn.active{background:var(--cyan);color:#fff;border-color:var(--cyan)}
-        
-        .mini-chart-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px}
-        .mini-chart-card{background:var(--bg2);padding:8px;border-radius:8px;border:1px solid var(--border);text-align:center}
-        .mini-chart-card canvas{height:60px!important}
-        
-        .collapsible-header{display:flex;justify-content:space-between;align-items:center;padding:12px;background:var(--bg2);border-radius:8px;cursor:pointer;margin-bottom:4px}
-        .collapsible-body{overflow:hidden;transition:max-height .3s ease-out}
-        .collapsible-body.collapsed{max-height:0!important}
-        
-        .martin-table-wrapper{overflow-x:auto}
-        .martin-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
-        .martin-table th, .martin-table td{padding:8px;border:1px solid var(--border);text-align:right}
-        .martin-table th{background:var(--bg2)}
-        
-        .level-safe{background:rgba(6,214,160,0.1)}
-        .level-risk{background:rgba(239,71,111,0.1)}
-        .level-high-winrate{background:rgba(34,211,238,0.2)}
-        .row-total-negative{background:rgba(239,71,111,0.2)}
-        .martin-legend{display:flex;gap:16px;margin-top:8px;font-size:11px}
-        .legend-box{width:12px;height:12px;border:1px solid var(--border);border-radius:2px}
-        
-        .swot-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-        .swot-box{padding:12px;border-radius:8px;border:1px solid var(--border);min-height:100px;font-size:12px}
-        .swot-center{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:var(--bg2);font-weight:700}
-        
-        .analyzer-nav{
-            display:none;position:sticky;top:64px;background:var(--bg2);padding:8px;gap:6px;z-index:4;
-            border:1px solid var(--border);margin-bottom:20px;border-radius:12px;
-            overflow-x:auto;box-shadow:0 2px 8px rgba(0,0,0,0.05);
-        }
-        .analyzer-nav button{
-            border:none;background:var(--bg1);color:var(--txt1);padding:8px 14px;
-            border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;
-            white-space:nowrap;display:flex;align-items:center;gap:6px;
-            border:1px solid transparent;transition:0.2s;
-        }
-        .analyzer-nav button:hover{background:var(--bg2);border-color:var(--cyan);color:var(--cyan)}
-        
-        /* Switch UI */
-        .switch {
-          position: relative;
-          display: inline-block;
-          width: 34px;
-          height: 20px;
-        }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider {
-          position: absolute;
-          cursor: pointer;
-          top: 0; left: 0; right: 0; bottom: 0;
-          background-color: #ccc;
-          transition: .4s;
-          border-radius: 20px;
-        }
-        .slider:before {
-          position: absolute;
-          content: "";
-          height: 14px; width: 14px;
-          left: 3px; bottom: 3px;
-          background-color: white;
-          transition: .4s;
-          border-radius: 50%;
-        }
-        input:checked + .slider { background-color: var(--cyan); }
-        input:checked + .slider:before { transform: translateX(14px); }
-        
-        .chart-grid-fixed{display:grid; grid-template-columns:1fr 1fr; gap:16px; width:100%}
-        .chart-box-fixed{background:var(--bg2); padding:16px; border-radius:12px; border:1px solid var(--border); min-height:350px}
-        .chart-box-fixed h5{margin-bottom:12px}
-        .chart-box-fixed canvas{width:100%!important; height:280px!important}
+        .updated { font-size: 0.8em; color: #38BDF8; margin-top: 4px; }
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <div class="logo"><span class="logo-icon">📡</span><span class="logo-text">AI Portal</span></div>
-        <div class="nav-label">Main</div>
-        <div class="nav-item active" onclick="showPage('home')" data-page="home"><span class="nav-icon">🏠</span><span class="nav-text">Home</span></div>
-        <div class="nav-item" onclick="showPage('analyzer')" data-page="analyzer"><span class="nav-icon">📈</span><span class="nav-text">Trade Analyzer</span></div>
-    </div>
-
-    <div class="header">
-        <div class="header-left">📡 <span id="pageTitleDisplay">Home</span></div>
-        <div class="header-right" style="display:flex;gap:20px;align-items:center">
-            <span class="powered-by">Powered by ShenXu</span>
-            <select onchange="setTheme(this.value)" id="themeSelect">
-                <option value="light">☀️ Light</option>
-                <option value="dark">🌙 Dark</option>
-            </select>
-            <span>Guest</span>
+    <div class="container">
+        <header>
+            <div class="brand"><span>AI</span> SIGNALS<span style="color:#F43F5E">HUB</span> / Testing Platform</div>
+            <span class="status-badge">DEV MODE</span>
+        </header>
+        <section class="info-card">
+            <h2>Testing Platform Dashboard</h2>
+            <p>此區域為開發與測試用途。以下模組可直接跳轉至對應的原型頁面進行驗證。請在推送到正式環境前，確保各模組功能正常運行。</p>
+        </section>
+        <div class="module-grid">
+            <a href="logo-pastel-showcase.html" class="module-card logos">
+                <span class="module-icon">🚀</span>
+                <div>
+                    <div class="module-title">Logo Showcase V2 (Elite)</div>
+                    <div class="module-desc">展示最新的 Logo 設計方案 D, E, F, G + Inventory Table。</div>
+                </div>
+                <div class="updated">Last updated: 15 Apr 2026</div>
+            </a>
+            <a href="logo-variant-2.html" class="module-card logos">
+                <span class="module-icon">🎨</span>
+                <div>
+                    <div class="module-title">Logo Variant 2</div>
+                    <div class="module-desc">Orange signal waves + Dark gray data bars design.</div>
+                </div>
+            </a>
+            <a href="logo-variant-3.html" class="module-card logos">
+                <span class="module-icon">💎</span>
+                <div>
+                    <div class="module-title">Logo Variant 3</div>
+                    <div class="module-desc">Scheme 3 enhanced with deep gray broadcast & dynamic gradients.</div>
+                </div>
+            </a>
+            <a href="index-simple.html" class="module-card analyzer">
+                <span class="module-icon">📊</span>
+                <div>
+                    <div class="module-title">Trade Analyzer</div>
+                    <div class="module-desc">Main trading analysis dashboard. Chart.js integrated.</div>
+                </div>
+            </a>
+            <a href="logo-static.html" class="module-card brands">
+                <span class="module-icon">🏗</span>
+                <div>
+                    <div class="module-title">Static Structure</div>
+                    <div class="module-desc">Base UI structure without heavy logic.</div>
+                </div>
+            </a>
         </div>
+        <footer>&copy; 2026 gary7641 / AI-SIGNALS-HUB &nbsp;|&nbsp; GitHub Pages deployment active</footer>
     </div>
-
-    <div class="main">
-        <div id="homePage" class="page active">
-            <h1>Welcome to AI Signal Portal</h1>
-        </div>
-
-        <div id="analyzerPage" class="page">
-            <div class="panel">
-                <h2>📈 Trade Analyzer</h2>
-                <div class="upload-controls">
-                    <div class="field">
-                        <label>交易報表 CSV</label>
-                        <input type="file" id="csvFile" accept=".csv">
-                    </div>
-                    <div class="field">
-                        <label>EA 類型</label>
-                        <select id="eaSelect">
-                            <option value="SMA">SMA (Standard)</option>
-                            <option value="SMA_Pro">SMA Pro</option>
-                            <option value="MKD">MKD (Standard)</option>
-                            <option value="MKD_Pro">MKD Pro</option>
-                            <option value="Flash">Flash (Standard)</option>
-                            <option value="OtherBasic">Other EA</option>
-                        </select>
-                    </div>
-                    <button class="primary-btn" id="analyzeBtn">🚀 開始分析</button>
-                    <button class="secondary-btn" id="resetBtn">Reset</button>
-                </div>
-            </div>
-
-            <div id="analyzerMenuBar" class="analyzer-nav">
-                <button onclick="scrollToAnalyzerSection('summaryCardsSection')">📊 Summary</button>
-                <button onclick="scrollToAnalyzerSection('symbolSection')">🔣 Symbols</button>
-                <button onclick="scrollToAnalyzerSection('symbolDetailSection')">🔍 Deep Analysis</button>
-                <button onclick="scrollToAnalyzerSection('mfeMaeNavPoint')">🎯 MFE/MAE</button>
-                <button onclick="scrollToAnalyzerSection('martinSection')">📉 Martingale</button>
-                <button onclick="scrollToAnalyzerSection('swotSection')">🛡️ SWOT</button>
-            </div>
-
-            <div id="summaryCardsSection" style="display:none">
-                <div class="collapsible-header" data-target="summaryCardsBody">
-                    <h3>帳戶總覽 Summary</h3>
-                    <span class="collapse-toggle">－</span>
-                </div>
-                <div id="summaryCardsBody" class="collapsible-body">
-                    <div class="summary-grid">
-                        <div class="panel">
-                            <h4>EA Radar</h4>
-                            <div class="radar-chart-wrapper"><canvas id="radarChart"></canvas></div>
-                            <div id="radarStats" style="font-size:12px; margin-top:10px">
-                                <div>Win Rate: <span id="radarProfitTrades">-</span></div>
-                                <div>Max DD: <span id="radarMaxDD">-</span></div>
-                                <div>Total Trades: <span id="radarActivity">-</span></div>
-                            </div>
-                        </div>
-                        <div class="panel">
-                            <h4>Equity Growth</h4>
-                            <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-                                <div>Growth: <span id="growthValue" class="kpi-value">0%</span></div>
-                                <div id="growthPeriod" style="font-size:12px; color:var(--txt2)"></div>
-                                <div style="text-align:right">Profit: <span id="profitValue">0.00</span></div>
-                            </div>
-                            <div class="equity-chart-wrapper"><canvas id="equityChart"></canvas></div>
-                            <div class="kpi-card">
-                                Initial: <span id="initialDepositValue">0.00</span> | Equity: <span id="equityValue">0.00</span>
-                                <div class="progress-bar"><div id="equityBar" class="progress-fill"></div></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="symbolSection" style="display:none;margin-top:16px">
-                <div class="collapsible-header" data-target="symbolBody">
-                    <h3>Symbol 一覽</h3>
-                    <span class="collapse-toggle">－</span>
-                </div>
-                <div id="symbolBody" class="collapsible-body">
-                    <div id="symbolButtons" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"></div>
-                    <div id="symbolMiniCharts" class="mini-chart-grid"></div>
-                </div>
-            </div>
-
-            <div id="symbolDetailSection" style="display:none;margin-top:16px">
-                <div class="collapsible-header" data-target="symbolDetailBody">
-                    <h3 id="symbolTitle">Symbol 深入分析</h3>
-                    <span class="collapse-toggle">－</span>
-                </div>
-                <div id="symbolDetailBody" class="collapsible-body">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px">
-                        <div id="eaTag" style="display:inline-block;padding:6px 12px;background:var(--purple);color:#fff;border-radius:4px;font-size:12px">EA</div>
-                        <div id="cumSwitchWrapper" style="display:none; align-items:center; gap:10px; font-size:13px">
-                            <span>Separated Cumulative</span>
-                            <label class="switch"><input type="checkbox" id="cumSwitch"><span class="slider"></span></label>
-                        </div>
-                    </div>
-                    
-                    <div id="symbolStats" class="panel" style="font-family:monospace; line-height:1.6"></div>
-                    
-                    <div class="chart-grid-fixed">
-                        <div class="chart-box-fixed" style="grid-column: span 2">
-                            <h5>Cumulative Profit</h5>
-                            <canvas id="symbolCumulativeChart"></canvas>
-                        </div>
-                        <div class="chart-box-fixed">
-                            <h5>Weekday Profit</h5>
-                            <canvas id="symbolWeekdayProfitChart"></canvas>
-                        </div>
-                        <div class="chart-box-fixed">
-                            <h5>Weekday Single Count</h5>
-                            <canvas id="symbolWeekdayCountChart"></canvas>
-                        </div>
-                        <div class="chart-box-fixed">
-                            <h5>Hourly Profit</h5>
-                            <canvas id="symbolHourlyProfitChart"></canvas>
-                        </div>
-                        <div class="chart-box-fixed">
-                            <h5>Hourly Single Count</h5>
-                            <canvas id="symbolHourlyCountChart"></canvas>
-                        </div>
-                        <div id="mfeMaeNavPoint" class="chart-box-fixed">
-                            <h5>MFE vs Result</h5>
-                            <canvas id="mfeChart"></canvas>
-                            <div style="display:flex; gap:8px; margin-top:8px">
-                                <button class="toggle-mode active" data-mode="pips">Pips</button>
-                                <button class="toggle-mode" data-mode="money">Money</button>
-                            </div>
-                        </div>
-                        <div class="chart-box-fixed">
-                            <h5>MAE vs Result</h5>
-                            <canvas id="maeChart"></canvas>
-                        </div>
-                        <div class="chart-box-fixed" style="grid-column: span 2">
-                            <h5>Holding Time Analysis</h5>
-                            <canvas id="holdingChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="martinSection" style="display:none;margin-top:16px">
-                <div class="collapsible-header" data-target="martinBody">
-                    <h3>Martingale Layer Analysis</h3>
-                    <span class="collapse-toggle">－</span>
-                </div>
-                <div id="martinBody" class="collapsible-body">
-                    <div id="martinTables"></div>
-                </div>
-            </div>
-
-            <div id="swotSection" style="display:none;margin-top:16px">
-                <div class="collapsible-header" data-target="swotBody">
-                    <h3>EA SWOT Analysis</h3>
-                    <span class="collapse-toggle">－</span>
-                </div>
-                <div id="swotBody" class="collapsible-body">
-                    <div class="swot-grid">
-                        <div class="swot-box" id="swotST"></div>
-                        <div class="swot-box" id="swotS"></div>
-                        <div class="swot-box" id="swotSW"></div>
-                        <div class="swot-box" id="swotT"></div>
-                        <div class="swot-box swot-center" id="swotCenterText">EA SWOT</div>
-                        <div class="swot-box" id="swotW"></div>
-                        <div class="swot-box" id="swotOT"></div>
-                        <div class="swot-box" id="swotO"></div>
-                        <div class="swot-box" id="swotOW"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="ea-rules.js"></script>
-    <script src="trade-analyzer.js"></script>
-    <script>
-        function setTheme(t){
-            document.body.dataset.theme=t;
-            document.getElementById('themeSelect').value=t;
-            localStorage.setItem('theme',t);
-        }
-        function showPage(p){
-            document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(ni=>ni.classList.remove('active'));
-            const el=document.getElementById(p+'Page');
-            if(el)el.classList.add('active');
-            const nav=document.querySelector(`.nav-item[data-page="${p}"]`);
-            if(nav)nav.classList.add('active');
-            document.getElementById('pageTitleDisplay').textContent = p.charAt(0).toUpperCase() + p.slice(1);
-        }
-        window.onload = () => setTheme(localStorage.getItem('theme')||'light');
-    </script>
 </body>
 </html>
