@@ -8,107 +8,51 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            background: #0F172A; /* Dark background for testing feel */
+            background: #FFFFFF;
             min-height: 100vh;
             padding: 40px 20px;
-            color: #E2E8F0;
+            color: #1E293B;
         }
         .container { max-width: 960px; margin: 0 auto; }
-
-        /* Header */
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 30px;
-            border-bottom: 1px solid #334155;
-            margin-bottom: 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            padding-bottom: 30px; border-bottom: 1px solid #E2E8F0; margin-bottom: 40px;
         }
-        .brand {
-            font-size: 1.4em;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-        }
-        .brand span { color: #38BDF8; }
+        .brand { font-size: 1.4em; font-weight: 800; letter-spacing: -0.03em; }
+        .brand span { color: #3B82F6; }
         .status-badge {
-            font-size: 0.75em;
-            padding: 5px 10px;
-            border-radius: 50px;
-            background: #F59E0B33;
-            color: #F59E0B;
-            font-weight: 600;
+            font-size: 0.75em; padding: 5px 10px; border-radius: 50px;
+            background: rgba(245, 158, 11, 0.1); color: #F59E0B; font-weight: 600;
         }
-
-        /* Info Card */
         .info-card {
-            background: #1E293B;
-            padding: 24px;
-            border-radius: 16px;
-            border: 1px solid #334155;
-            margin-bottom: 30px;
+            background: #F8FAFC; padding: 24px; border-radius: 16px;
+            border: 1px solid #E2E8F0; margin-bottom: 30px;
         }
-        .info-card h2 {
-            font-size: 1.1em;
-            color: #94A3B8;
-            margin-bottom: 12px;
-        }
-        .info-card p { font-size: 0.9em; color: #64748B; }
-
-        /* Grid */
+        .info-card h2 { font-size: 1.1em; color: #475569; margin-bottom: 12px; }
+        .info-card p { font-size: 0.9em; color: #94A3B8; }
         .module-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;
         }
-
-        /* Module Card */
         .module-card {
-            background: #1E293B;
-            padding: 28px 22px;
-            border-radius: 16px;
-            border: 1px solid #334155;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-            color: #E2E8F0;
-            display: flex; flex-direction: column; gap: 12px;
-            border-left: 4px solid transparent;
+            background: #FFFFFF; padding: 28px 22px; border-radius: 16px;
+            border: 1px solid #E2E8F0; transition: all 0.3s ease; cursor: pointer;
+            text-decoration: none; color: #1E293B;
+            display: flex; flex-direction: column; gap: 12px; border-left: 4px solid transparent;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
-        .module-card:hover {
-            background: #253248;
-            transform: translateY(-2px);
-            border-left-color: #38BDF8;
-        }
+        .module-card:hover { background: #F1F5F9; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+        .module-card:hover { border-left-color: #3B82F6; }
         .module-card.logos:hover { border-left-color: #F59E0B; }
         .module-card.brands:hover { border-left-color: #F43F5E; }
         .module-card.analyzer:hover { border-left-color: #10B981; }
-
-        .module-icon {
-            font-size: 2.2em;
-        }
-        .module-title {
-            font-size: 1.05em;
-            font-weight: 700;
-            color: #F1F5F9;
-        }
-        .module-desc {
-            font-size: 0.85em;
-            color: #64748B;
-            line-height: 1.5;
-        }
-
-        /* Footer */
+        .module-icon { font-size: 2.2em; }
+        .module-title { font-size: 1.05em; font-weight: 700; color: #0F172A; }
+        .module-desc { font-size: 0.85em; color: #94A3B8; line-height: 1.5; }
         footer {
-            margin-top: 50px;
-            padding-top: 25px;
-            border-top: 1px solid #334155;
-            text-align: center;
-            font-size: 0.8em;
-            color: #64748B;
+            margin-top: 50px; padding-top: 25px; border-top: 1px solid #E2E8F0;
+            text-align: center; font-size: 0.8em; color: #94A3B8;
         }
-
-        /* Utility */
-        .updated { font-size: 0.8em; color: #38BDF8; margin-top: 4px; }
+        .updated { font-size: 0.8em; color: #3B82F6; margin-top: 4px; }
     </style>
 </head>
 <body>
@@ -117,14 +61,11 @@
             <div class="brand"><span>AI</span> SIGNALS<span style="color:#F43F5E">HUB</span> / Testing Platform</div>
             <span class="status-badge">DEV MODE</span>
         </header>
-
         <section class="info-card">
             <h2>Testing Platform Dashboard</h2>
             <p>此區域為開發與測試用途。以下模組可直接跳轉至對應的原型頁面進行驗證。請在推送到正式環境前，確保各模組功能正常運行。</p>
         </section>
-
         <div class="module-grid">
-            <!-- Logo Showcase -->
             <a href="logo-pastel-showcase.html" class="module-card logos">
                 <span class="module-icon">🚀</span>
                 <div>
@@ -133,8 +74,6 @@
                 </div>
                 <div class="updated">Last updated: 15 Apr 2026</div>
             </a>
-
-            <!-- Logo Variants -->
             <a href="logo-variant-2.html" class="module-card logos">
                 <span class="module-icon">🎨</span>
                 <div>
@@ -142,7 +81,6 @@
                     <div class="module-desc">Orange signal waves + Dark gray data bars design.</div>
                 </div>
             </a>
-
             <a href="logo-variant-3.html" class="module-card logos">
                 <span class="module-icon">💎</span>
                 <div>
@@ -150,17 +88,13 @@
                     <div class="module-desc">Scheme 3 enhanced with deep gray broadcast & dynamic gradients.</div>
                 </div>
             </a>
-
-            <!-- Analyzer Module -->
-            <a href="index.html" class="module-card analyzer">
+            <a href="index-simple.html" class="module-card analyzer">
                 <span class="module-icon">📊</span>
                 <div>
                     <div class="module-title">Trade Analyzer</div>
                     <div class="module-desc">Main trading analysis dashboard. Chart.js integrated.</div>
                 </div>
             </a>
-
-            <!-- Static Structure -->
             <a href="logo-static.html" class="module-card brands">
                 <span class="module-icon">🏗</span>
                 <div>
@@ -169,10 +103,7 @@
                 </div>
             </a>
         </div>
-
-        <footer>
-            &copy; 2026 gary7641 / AI-SIGNALS-HUB &nbsp;|&nbsp; GitHub Pages deployment active
-        </footer>
+        <footer>&copy; 2026 gary7641 / AI-SIGNALS-HUB &nbsp;|&nbsp; GitHub Pages deployment active</footer>
     </div>
 </body>
 </html>
