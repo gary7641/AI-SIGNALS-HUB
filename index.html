@@ -72,7 +72,7 @@ display:flex;align-items:center;justify-content:space-between;
 padding:0 24px;z-index:5;transition:left .2s;
 }
 .sidebar:hover + .header{left:240px}
-.powered-by{font-size:11px;color:var(--txt2);font-weight:600;letter-spacing:0.5px}
+.powered-by{font-size:11px; color:var(--txt2); font-weight:600; letter-spacing:0.5px}
 .main{
 margin-left:60px;margin-top:64px;padding:28px;
 min-height:calc(100vh - 64px);background:var(--bg1);
@@ -134,90 +134,191 @@ white-space:nowrap;display:flex;align-items:center;gap:6px;
 border:1px solid transparent;transition:0.2s;
 }
 .analyzer-nav button:hover{background:var(--bg2);border-color:var(--cyan);color:var(--cyan)}
-/* Switch UI */
-.switch {
-position:relative;display:inline-block;width:34px;height:20px;
-}
-.switch input{opacity:0;width:0;height:0;}
-.slider{
-position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;
-background-color:#ccc;transition:.4s;border-radius:20px;
-}
-.slider:before{
-position:absolute;content:"";
-height:14px;width:14px;left:3px;bottom:3px;
-background-color:white;transition:.4s;border-radius:50%;
-}
-input:checked + .slider{background-color:var(--cyan);}
-input:checked + .slider:before{transform:translateX(14px);}
+.switch{position:relative;display:inline-block;width:34px;height:20px}
+.switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;transition:.4s;border-radius:20px}
+.slider:before{position:absolute;content:"";height:14px;width:14px;left:3px;bottom:3px;background-color:white;transition:.4s;border-radius:50%}
+input:checked + .slider{background-color:var(--cyan)}
+input:checked + .slider:before{transform:translateX(14px)}
 .chart-grid-fixed{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%}
 .chart-box-fixed{background:var(--bg2);padding:16px;border-radius:12px;border:1px solid var(--border);min-height:350px}
 .chart-box-fixed h5{margin-bottom:12px}
 .chart-box-fixed canvas{width:100%!important;height:280px!important}
 </style>
+<link rel="stylesheet" href="analyzer-style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-<div class="sidebar">
-<div class="logo"><span class="logo-icon">📡</span><span class="logo-text">AI Portal</span></div>
-<div class="nav-label">Main</div>
-<div class="nav-item active" data-page="home"><span class="nav-icon">🏠</span><span class="nav-text">Home</span></div>
-<div class="nav-item" data-page="analyzer"><span class="nav-icon">📈</span><span class="nav-text">Trade Analyzer</span></div>
+<nav class="sidebar">
+  <div class="logo">
+    <span class="logo-icon">📡</span>
+    <span class="logo-text">AI Portal</span>
+  </div>
+  <div class="nav-label">Main</div>
+  <div class="nav-item" data-page="home" onclick="showPage('home')">
+    <span class="nav-icon">🏠</span><span class="nav-text">Home</span>
+  </div>
+  <div class="nav-item" data-page="analyzer" onclick="showPage('analyzer')">
+    <span class="nav-icon">📈</span><span class="nav-text">Trade Analyzer</span>
+  </div>
+</nav>
+<div class="header">
+  <span class="powered-by">Powered by ShenXu</span>
+  <select onchange="setTheme(this.value)" id="themeSelect"><option value="light">☀️ Light</option><option value="dark">🌙 Dark</option></select>
+  <span>Guest</span>
 </div>
-<header class="header">
-<div class="powered-by"> Powered by ShenXu </div>
-<Select onchange="setTheme(this.value)" id="themeSelect"><option value="light">&#9728; Light</option><option value="dark">&#127769; Dark</option></select> Guest</header>
-<main class="main">
-<section id="homePage" class="page active">
-<h1 id="pageTitleDisplay">Welcome to AI Signal Portal</h1>
-</section>
-<section id="analyzerPage" class="page">
-<h2>&#128200; Trade Analyzer</h2>
-<div class="panel">
-<div class="upload-controls">
-<div class="field">
-<label>交易報表 CSV</label>
-<input type="file" id="csvFile" accept=".csv">
+<div class="main">
+  <div id="homePage" class="page">
+    <h2>Welcome to AI Signal Portal</h2>
+  </div>
+  <div id="analyzerPage" class="page">
+    <h2>📈 Trade Analyzer</h2>
+    <div class="panel">
+      <div class="upload-controls">
+        <div class="field"><label>交易報表 CSV</label><input type="file" id="csvFile" accept=".csv"></div>
+        <div class="field"><label>EA 類型</label>
+          <select id="eaSelect">
+            <option value="SMA">SMA (Standard)</option>
+            <option value="SMA_Pro">SMA Pro</option>
+            <option value="MKD">MKD (Standard)</option>
+            <option value="MKD_Pro">MKD Pro</option>
+            <option value="Flash">Flash (Standard)</option>
+            <option value="OtherBasic">Other EA</option>
+          </select>
+        </div>
+        <button class="primary-btn" id="analyzeBtn">🚀 開始分析</button>
+        <button class="secondary-btn" id="resetBtn">Reset</button>
+      </div>
+    </div>
+    <div id="analyzerMenuBar" class="analyzer-nav">
+      <button onclick="scrollToAnalyzerSection('summaryCardsSection')">📊 Summary</button>
+      <button onclick="scrollToAnalyzerSection('symbolSection')">🔣 Symbols</button>
+      <button onclick="scrollToAnalyzerSection('symbolDetailSection')">🔍 Deep Analysis</button>
+      <button onclick="scrollToAnalyzerSection('symbolDetailSection')">🎯 MFE/MAE</button>
+      <button onclick="scrollToAnalyzerSection('martinSection')">📉 Martingale</button>
+      <button onclick="scrollToAnalyzerSection('swotSection')">🛡️ SWOT</button>
+    </div>
+    <div id="summaryCardsSection" class="panel" style="display:none">
+      <div class="collapsible-header" data-target="summaryCardsBody">
+        <h3>帳戶總覽 Summary</h3><span class="collapse-toggle">－</span>
+      </div>
+      <div id="summaryCardsBody" class="collapsible-body">
+        <div class="summary-grid">
+          <div>
+            <div class="kpi-card" style="margin-bottom:8px">
+              <h4>EA Radar</h4>
+              <div>Win Rate: <span id="radarProfitTrades">-</span></div>
+              <div>Max DD: <span id="radarMaxDD">-</span></div>
+              <div>Total Trades: <span id="radarActivity">-</span></div>
+            </div>
+            <div class="kpi-card">
+              <h4>Equity Growth</h4>
+              <div>Growth: <span id="growthValue">0</span>% <small id="growthPeriod"></small></div>
+              <div style="margin-top:8px">Profit: <span id="profitValue">0.00</span></div>
+              <div class="progress-bar"><div class="progress-fill" id="profitBar"></div></div>
+              <div style="margin-top:4px">Initial: <span id="initialDepositValue">0.00</span> | Equity: <span id="equityValue">0.00</span></div>
+              <div class="progress-bar"><div class="progress-fill" id="equityBar"></div></div>
+            </div>
+          </div>
+          <div>
+            <div class="radar-chart-wrapper"><canvas id="radarChart"></canvas></div>
+            <div class="equity-chart-wrapper"><canvas id="equityChart"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="symbolSection" class="panel" style="display:none">
+      <div class="collapsible-header" data-target="symbolBody">
+        <h3>Symbol 一覽</h3><span class="collapse-toggle">－</span>
+      </div>
+      <div id="symbolBody" class="collapsible-body">
+        <div id="symbolButtons" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px"></div>
+        <div id="symbolMiniCharts" class="mini-chart-grid"></div>
+      </div>
+    </div>
+    <div id="symbolDetailSection" class="panel" style="display:none">
+      <div class="collapsible-header" data-target="symbolDetailBody">
+        <h3 id="symbolTitle">Symbol 深入分析</h3><span class="collapse-toggle">－</span>
+      </div>
+      <div id="symbolDetailBody" class="collapsible-body">
+        <div id="symbolStats" style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px"></div>
+        <div style="margin-bottom:8px">
+          <span id="eaTag">EA</span>
+          <span id="cumSwitchWrapper" style="display:inline-flex;align-items:center;gap:6px;margin-left:16px">
+            Separated
+            <label class="switch"><input type="checkbox" id="cumSwitch"><span class="slider"></span></label>
+            Cumulative
+          </span>
+        </div>
+        <div class="chart-grid-fixed">
+          <div class="chart-box-fixed"><h5>##### Cumulative Profit</h5><canvas id="symbolCumulativeChart"></canvas></div>
+          <div class="chart-box-fixed"><h5>##### Weekday Profit</h5><canvas id="symbolWeekdayProfitChart"></canvas></div>
+          <div class="chart-box-fixed"><h5>##### Weekday Single Count</h5><canvas id="symbolWeekdayCountChart"></canvas></div>
+          <div class="chart-box-fixed"><h5>##### Hourly Profit</h5><canvas id="symbolHourlyProfitChart"></canvas></div>
+          <div class="chart-box-fixed"><h5>##### Hourly Single Count</h5><canvas id="symbolHourlyCountChart"></canvas></div>
+        </div>
+        <div style="margin:16px 0 8px;display:flex;gap:8px;align-items:center">
+          <h5>##### MFE vs Result</h5>
+          <button class="toggle-mode active" data-mode="pips">Pips</button>
+          <button class="toggle-mode" data-mode="money">Money</button>
+        </div>
+        <div class="chart-grid-fixed">
+          <div class="chart-box-fixed"><canvas id="mfeChart"></canvas></div>
+          <div class="chart-box-fixed"><h5>##### MAE vs Result</h5><canvas id="maeChart"></canvas></div>
+          <div class="chart-box-fixed"><h5>##### Holding Time Analysis</h5><canvas id="holdingChart"></canvas></div>
+        </div>
+      </div>
+    </div>
+    <div id="martinSection" class="panel" style="display:none">
+      <div class="collapsible-header" data-target="martinBody">
+        <h3>Martingale Layer Analysis</h3><span class="collapse-toggle">－</span>
+      </div>
+      <div id="martinBody" class="collapsible-body">
+        <div id="martinTables"></div>
+      </div>
+    </div>
+    <div id="swotSection" class="panel" style="display:none">
+      <div class="collapsible-header" data-target="swotBody">
+        <h3>EA SWOT Analysis</h3><span class="collapse-toggle">－</span>
+      </div>
+      <div id="swotBody" class="collapsible-body">
+        <div class="swot-grid">
+          <div class="swot-box" id="swotST"></div>
+          <div class="swot-box" id="swotS"></div>
+          <div class="swot-box" id="swotSW"></div>
+          <div class="swot-box" id="swotT"></div>
+          <div class="swot-box swot-center">
+            <div id="eaTag2">EA SWOT</div>
+            <div id="eaCenterAnalysis" style="font-size:11px;margin-top:8px"></div>
+          </div>
+          <div class="swot-box" id="swotW"></div>
+          <div class="swot-box" id="swotOT"></div>
+          <div class="swot-box" id="swotO"></div>
+          <div class="swot-box" id="swotOW"></div>
+        </div>
+        <div id="swotCenterText" style="margin-top:12px;font-size:12px"></div>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="field">
-<label>EA 類型</label>
-<select id="eaSelect">
-<option value="SMA">SMA (Standard)</option>
-<option value="SMA_Pro">SMA Pro</option>
-<option value="MKD">MKD (Standard)</option>
-<option value="MKD_Pro">MKD Pro</option>
-<option value="Flash">Flash (Standard)</option>
-<option value="OtherBasic">Other EA</option>
-</select>
-</div>
-<button class="primary-btn" onclick="analyze()">&#128640; 開始分析</button>
-<button class="secondary-btn" onclick="resetAnalyzer()">Reset</button>
-</div>
-</div>
-<div class="analyzer-nav">
-<button onclick="scrollToSection('summary')">&#128202; Summary</button>
-<button onclick="scrollToSection('symbols')">&#125216; Symbols</button>
-<button onclick="scrollToSection('analysis')">&#128269; Deep Analysis</button>
-<button onclick="scrollToSection('mfe')">&#127919; MFE/MAE</button>
-<button onclick="scrollToSection('martingale')">&#128200; Martingale</button>
-<button onclick="scrollToSection('swot')">&#129670; SWOT</button>
-</div>
-<div id="summary" class="panel"><h3>### 帳戶總覽 Summary</h3><p>  &#8211;  </p></div>
-<div id="symbols" class="panel"><h3>### Symbol 一覽</h3><p>  &#8211;  </p></div>
-<div id="analysis" class="panel"><h3>### Symbol 深入分析</h3><p>  &#8211;  </p></div>
-<div id="mfe" class="panel"><h3>EA</h3><div class="chart-grid-fixed"><div class="chart-box-fixed"><h5>Separated</h5><input type="checkbox" id="cumSwitch" onchange="updateCumChart()"> <label for="cumSwitch">Separated / Cumulative</label></div><div class="chart-box-fixed"><h5>##### Cumulative Profit</h5></div></div><div class="chart-grid-fixed"><div class="chart-box-fixed"><h5>##### Weekday Profit</h5></div><div class="chart-box-fixed"><h5>##### Weekday Single Count</h5></div></div><div class="chart-grid-fixed"><div class="chart-box-fixed"><h5>##### Hourly Profit</h5></div><div class="chart-box-fixed"><h5>##### Hourly Single Count</h5></div></div><div class="chart-grid-fixed"><div class="chart-box-fixed"><h5>##### MFE vs Result <span class="currency-toggle">Pips / Money</span></h5></div><div class="chart-box-fixed"><h5>##### MAE vs Result</h5></div></div><div class="chart-box-fixed"><h5>##### Holding Time Analysis</h5></div></div>
-<div id="martingale" class="panel"><h3>### Martingale Layer Analysis</h3><p>  &#8211;  </p></div>
-<div id="swot" class="panel"><h3>### EA SWOT Analysis</h3><p>  &#8211;  </p></div>
-</section>
 <script>
-function setTheme(t){document.body.dataset.theme=t;document.getElementById('themeSelect').value=t;localStorage.setItem('theme',t);}
-function showPage(p){document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));document.querySelectorAll('.nav-item').forEach(ni=>ni.classList.remove('active'));const el=document.getElementById(p+'Page');if(el)el.classList.add('active');const nav=document.querySelector(`.nav-item[data-page="${p}"]`);if(nav)nav.classList.add('active');document.getElementById('pageTitleDisplay').textContent=p.charAt(0).toUpperCase()+p.slice(1);}
-document.querySelectorAll('.nav-item').forEach(el=>el.addEventListener('click', ()=>showPage(el.dataset.page)));
-window.onload=()=>setTheme(localStorage.getItem('theme')||'light');
-function analyze(){alert('CSV 未上传');}
-function resetAnalyzer(){alert('已重置');}
-function updateCumChart(){}
-function scrollToSection(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'});}
+function setTheme(t){
+  document.body.dataset.theme=t;
+  document.getElementById('themeSelect').value=t;
+  localStorage.setItem('theme',t);
+}
+function showPage(p){
+  document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(ni=>ni.classList.remove('active'));
+  const el=document.getElementById(p+'Page');
+  if(el)el.classList.add('active');
+  const nav=document.querySelector(`.nav-item[data-page="${p}"]`);
+  if(nav)nav.classList.add('active');
+  document.getElementById('pageTitleDisplay') && (document.getElementById('pageTitleDisplay').textContent = p.charAt(0).toUpperCase() + p.slice(1));
+}
+window.onload = () => setTheme(localStorage.getItem('theme')||'light');
 </script>
-</main>
+<script src="ea-rules.js"></script>
+<script src="trade-analyzer.js"></script>
 </body>
 </html>
