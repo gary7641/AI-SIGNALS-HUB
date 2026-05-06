@@ -1450,29 +1450,29 @@ function renderSymbolExtraCharts(symbol, trades) {
 function renderSwot(swot) {
   if (!swot) return;
 
-  document.getElementById("swotST").innerHTML =
-    "<strong>ST</strong><br>" + swot.ST.join("<br>");
-  document.getElementById("swotS").innerHTML =
-    "<strong>S</strong><br>" + swot.S.join("<br>");
-  document.getElementById("swotSW").innerHTML =
-    "<strong>SW</strong><br>" + swot.SW.join("<br>");
-
-  document.getElementById("swotT").innerHTML =
-    "<strong>T</strong><br>" + swot.T.join("<br>");
-  document.getElementById("swotW").innerHTML =
-    "<strong>W</strong><br>" + swot.W.join("<br>");
-
-  document.getElementById("swotOT").innerHTML =
-    "<strong>OT</strong><br>" + swot.OT.join("<br>");
-  document.getElementById("swotO").innerHTML =
-    "<strong>O</strong><br>" + swot.O.join("<br>");
-  document.getElementById("swotOW").innerHTML =
-    "<strong>OW</strong><br>" + swot.OW.join("<br>");
-
-  const eaCenterText = document.getElementById("swotCenterText");
-  if (eaCenterText) {
-    eaCenterText.innerHTML = swot.centerAnalysis
-      ? swot.centerAnalysis.join("<br>")
-      : "";
+  function fmtItems(label, items, colorClass) {
+    if (!items || items.length === 0) return '';
+    const rows = items.map(txt => `<div class="swot-item">${txt}</div>`).join('');
+    return `<div class="swot-label ${colorClass}">${label}</div>${rows}`;
   }
-}
+
+  document.getElementById("swotST").innerHTML = fmtItems("S/T Strengths", swot.ST, "label-s");
+  document.getElementById("swotS").innerHTML  = fmtItems("Strengths", swot.S, "label-s");
+  document.getElementById("swotSW").innerHTML = fmtItems("S/W Mix", swot.SW, "label-s");
+  document.getElementById("swotT").innerHTML  = fmtItems("Threats", swot.T, "label-t");
+  document.getElementById("swotW").innerHTML  = fmtItems("Weaknesses", swot.W, "label-w");
+  document.getElementById("swotOT").innerHTML = fmtItems("O/T Mix", swot.OT, "label-o");
+  document.getElementById("swotO").innerHTML  = fmtItems("Opportunities", swot.O, "label-o");
+  document.getElementById("swotOW").innerHTML = fmtItems("O/W Mix", swot.OW, "label-o");
+
+  const eaTag = document.getElementById("eaTag2");
+  if (eaTag && swot.centerAnalysis) {
+    const ea = swot.centerAnalysis[0] || "EA SWOT";
+    eaTag.textContent = ea;
+  }
+  const centerText = document.getElementById("swotCenterText");
+  if (centerText) {
+    const lines = swot.centerAnalysis ? swot.centerAnalysis.slice(1) : [];
+    centerText.innerHTML = lines.map(l => `<div class="swot-item">${l}</div>`).join('');
+  }
+}}
