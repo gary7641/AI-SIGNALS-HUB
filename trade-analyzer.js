@@ -61,6 +61,15 @@ if (analyzeBtn) analyzeBtn.addEventListener("click", handleAnalyze);
 const resetBtn = document.getElementById("resetBtn");
 if (resetBtn) resetBtn.addEventListener("click", resetView);
 
+// Auto-analyze on CSV upload
+const csvFileInput = document.getElementById("csvFile");
+if (csvFileInput) csvFileInput.addEventListener("change", function() {
+  if (this.files && this.files.length > 0) handleAnalyze();
+});
+
+// Hide analyze button since CSV upload auto-triggers
+if (analyzeBtn) analyzeBtn.style.display = "none";
+
 // Pips / Money switch for MFE/MAE/Holding
 document.addEventListener("click", (e) => {
   const btn = e.target.closest(".toggle-mode");
