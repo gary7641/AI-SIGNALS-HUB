@@ -294,7 +294,7 @@ function buildSwotForEA(eaKey, symbol, stats, martinSummary) {
     T.push(
       "在點差擴大、交易成本高或滑點明顯環境，短線 Scalping 容易由盈轉虧。"
     );
-  } else if (rule.style === "swing" || rule.style === "swing-aggressive") {
+  } else if (rule.style === "wave-trend" || rule.style === "wave-martin") {       O.push("波浪策略在清晰趨勢市況中有機捕捉波段高低點，盈利空間較大。");       T.push("波浪計數具主觀性，市場結構不清時入場信號準確度下降，需配合止损保護。");       if (rule.style === "wave-martin") {         SW.push("波浪失效時馬丁加倉風險急升，需嚴控最大層數及單邊市暴露。");       }     } else if (rule.style === "swing" || rule.style === "swing-aggressive") {
     T.push(
       "若市場缺乏方向、波動不足，波段策略可能長時間無單或盈利效率下降。"
     );
