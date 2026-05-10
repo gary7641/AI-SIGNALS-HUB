@@ -139,7 +139,7 @@ function parseCsv(text) {
   for (let i = 1; i < lines.length; i++) {
     const rowRaw = lines[i];
     if (!rowRaw.trim()) continue;
-    const cells = (rowRaw.match(/("(?:[^"]|"")*"|[^,]*)/g)||[]).map(c=>c.replace(/^"|"$/g,'').replace(/""/g,'"'));
+        const cells = rowRaw.split(",").map(c => c.trim().replace(/^"|"$/g, ""));
 
     if (iSymbol < 0) continue;
 
@@ -1483,4 +1483,4 @@ function renderSwot(swot) {
     const lines = swot.centerAnalysis ? swot.centerAnalysis.slice(1) : [];
     centerText.innerHTML = lines.map(l => `<div class="swot-item">${l}</div>`).join('');
   }
-}}
+}
