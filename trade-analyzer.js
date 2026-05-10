@@ -402,6 +402,10 @@ function buildAll() {
   renderSymbol("ALL");
     const menuBar = document.getElementById("analyzerMenuBar");
   if (menuBar) menuBar.style.display = "flex";
+    const da = document.getElementById("deepAnalysisSection"); if (da) da.style.display = "block";
+  const mfe = document.getElementById("mfeMaeSection"); if (mfe) mfe.style.display = "block";
+  const mg = document.getElementById("martingaleSection"); if (mg) mg.style.display = "block";
+  const sw = document.getElementById("swotSection"); if (sw) sw.style.display = "block";
 }
 
 function resetView() {
