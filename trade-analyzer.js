@@ -1,5 +1,5 @@
 // trade-analyzer.js
-// v0.0260308003 + sort-by-closeTime + sync body theme + Martin + MFE/MAE + SWOT center id
+// v0.026030800function buildAll3 + sort-by-closeTime + sync body theme + Martin + MFE/MAE + SWOT center id
 
 let globalTrades = [];
 let globalBySymbol = {};
@@ -387,22 +387,21 @@ function buildAll() {
   const acc = buildAccountSummary();
 
   renderSummaryCards(acc);
-  document.getElementById("summaryCardsSection").style.display = "block";
-  expandBody("summaryCardsBody");
-
-  renderSummaryCards(acc);
-  document.getElementById("summaryCardsSection").style.display = "block";
+    const scs = document.getElementById("summaryCardsSection"); if (scs) scs.style.display = "block";
   expandBody("summaryCardsBody");
 
   renderAccountStatistics(acc.stats);  // ★ NEW
+    renderAccountCharts(acc);
   renderMinimumArea(acc.stats);
 
   renderSymbolButtons();
-  document.getElementById("symbolSection").style.display = "block";
+    const ss = document.getElementById("symbolSection"); if (ss) ss.style.display = "block";
   renderSymbolMiniCharts();
   expandBody("symbolBody");
 
   renderSymbol("ALL");
+    const menuBar = document.getElementById("analyzerMenuBar");
+  if (menuBar) menuBar.style.display = "flex";
 }
 
 function resetView() {
@@ -656,9 +655,9 @@ function renderMinimumArea(stats) {
 }
 
 function renderAccountCharts(acc) {
-  const ctx1 = document.getElementById("equityChart").getContext("2d");
-  const ctx2 = document.getElementById("weekdayChart").getContext("2d");
-  const ctx3 = document.getElementById("symbolProfitChart").getContext("2d");
+  const eq = document.getElementById("equityChart"); const ctx1 = eq ? eq.getContext("2d") : null;
+    const ctx2 = document.getElementById("weekdayChart") ? document.getElementById("weekdayChart").getContext("2d") : null;
+  const ctx3 = document.getElementById("symbolProfitChart") ? document.getElementById("symbolProfitChart").getContext("2d") : null;
 
   if (equityChart) equityChart.destroy();
   if (weekdayChart) weekdayChart.destroy();
