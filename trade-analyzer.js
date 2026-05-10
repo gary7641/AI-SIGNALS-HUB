@@ -125,9 +125,9 @@ function parseCsv(text) {
     idx("open time") !== -1 ? idx("open time") : idx("Open Time");
   const iCloseTime =
     idx("close time") !== -1 ? idx("close time") : idx("Close Time");
-  const iType = idx("type");
+  const iType = [idx("type"),idx("action"),idx("direction"),idx("order type"),idx("trade type")].find(i=>i>=0)??-1;
   const iLots = idx("lots") !== -1 ? idx("lots") : idx("volume");
-  const iSymbol = idx("symbol");
+  const iSymbol = [idx("symbol"),idx("instrument"),idx("pair"),idx("currency"),idx("item")].find(i=>i>=0)??-1;
   const iNetProfit =
     idx("net profit") !== -1 ? idx("net profit") : idx("profit");
   const iNetPips = idx("net pips") !== -1 ? idx("net pips") : idx("pips");
@@ -139,12 +139,12 @@ function parseCsv(text) {
   for (let i = 1; i < lines.length; i++) {
     const rowRaw = lines[i];
     if (!rowRaw.trim()) continue;
-    const cells = rowRaw.split(",");
+    const cells = (rowRaw.match(/("(?:[^"]|"")*"|[^,]*)/g)||[]).map(c=>c.replace(/^"|"$/g,'').replace(/""/g,'"'));
 
-    if (iType < 0 || iSymbol < 0) continue;
+    if (iSymbol < 0) continue;
 
     const type = (cells[iType] || "").trim().toLowerCase();
-    if (type !== "buy" && type !== "sell") continue;
+    if (iType >= 0 && type !== "buy" && type !== "sell" && type !== "long" && type !== "short" && type !== "b" && type !== "s") continue;
 
     const t = {
       openTime: iOpenTime >= 0 ? cells[iOpenTime] || "" : "",
