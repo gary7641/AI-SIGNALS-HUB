@@ -100,8 +100,8 @@ function handleAnalyze() {
 
   const reader = new FileReader();
   reader.onload = (e) => {
-    parseCsv(e.target.result);
-    buildAll();
+    try { parseCsv(e.target.result); buildAll(); } catch(err) { alert("分析失敗: " + err.message); console.error(err); }
+    
   };
   reader.readAsText(file);
 }
