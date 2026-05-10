@@ -115,7 +115,7 @@ function parseCsv(text) {
     return;
   }
 
-  const headers = lines[0].split(",");
+  const headers = lines[0].split(",").map(h=>h.replace(/^"|"$/g,"").trim());
   const idx = (name) =>
     headers.findIndex(
       (h) => h.trim().toLowerCase() === name.trim().toLowerCase()
