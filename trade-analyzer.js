@@ -790,8 +790,8 @@ function renderSymbol(symbol) {
   const trades = symbol === "ALL" ? globalTrades : globalBySymbol[symbol] || [];
   if (!trades.length) return;
 
-  document.getElementById("symbolDetailSection").style.display = "block";
-  document.getElementById("swotSection").style.display = "block";
+    const sds2 = document.getElementById("symbolDetailSection"); if (sds2) sds2.style.display = "block";
+    const sw2 = document.getElementById("swotSection"); if (sw2) sw2.style.display = "block";
   expandBody("symbolDetailBody");
   expandBody("swotBody");
 
