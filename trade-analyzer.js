@@ -374,7 +374,7 @@ function expandBody(id) {
   const body = document.getElementById(id);
   if (!body) return;
   body.classList.remove("collapsed");
-  body.style.maxHeight = body.scrollHeight + "px";
+      body.style.maxHeight = (body.scrollHeight || 10000) + "px";
 }
 
 // ---------- 總流程 / RESET ----------
