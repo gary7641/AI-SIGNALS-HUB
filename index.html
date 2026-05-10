@@ -323,8 +323,9 @@ function showPage(p){
   document.getElementById('pageTitleDisplay') && (document.getElementById('pageTitleDisplay').textContent = p.charAt(0).toUpperCase() + p.slice(1));
 }
 window.onload = () => setTheme(localStorage.getItem('theme')||'light');
+  function scrollToAnalyzerSection(id){ const el=document.getElementById(id); if(el){ el.scrollIntoView({behavior:'smooth',block:'start'}); } }
 </script>
 <script src="ea-rules.js"></script>
 <script src="trade-analyzer.js"></script>
-</body>
+  body>
 </html>
