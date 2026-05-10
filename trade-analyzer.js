@@ -92,7 +92,7 @@ function handleAnalyze() {
   const fileInput = document.getElementById("csvFile");
   const file = fileInput ? fileInput.files[0] : null;
   if (!file) {
-    alert("請先選擇 CSV 檔案");
+    (function(m){var e=document.getElementById("analyzerMsg");if(e){e.style.cssText="display:block;padding:10px 16px;margin:8px 0;border-radius:8px;font-weight:600;background:#fef9c3;color:#854d0e;";e.textContent=m;}else{alert(m);}}("請先選擇 CSV 檔案"))
     return;
   }
   const eaSelect = document.getElementById("eaSelect");
@@ -380,7 +380,7 @@ function expandBody(id) {
 // ---------- 總流程 / RESET ----------
 function buildAll() {
   if (!globalTrades.length) {
-    alert("CSV 內沒有有效交易紀錄");
+    (function(m){var e=document.getElementById("analyzerMsg");if(e){e.style.cssText="display:block;padding:10px 16px;margin:8px 0;border-radius:8px;font-weight:600;background:#fee2e2;color:#b91c1c;";e.textContent=m;}else{alert(m);}}("找不到有效 Buy/Sell 交易。請確認 CSV 格式正確。"))
     return;
   }
 
